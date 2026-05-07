@@ -1,4 +1,10 @@
-export default function handler(req, res) {
-  // This handles the Discord callback and redirects back to home
-  res.redirect('https://cartoons-orpin.vercel.app');
+export default async function handler(req, res) {
+  const { code } = req.query;
+
+  if (!code) {
+    return res.redirect('https://cartoons-orpin.vercel.app');
+  }
+
+  // Redirect back with code so Supabase can process it server-side friendly
+  return res.redirect(`https://cartoons-orpin.vercel.app?code=${code}`);
 }
