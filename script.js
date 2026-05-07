@@ -1,61 +1,73 @@
-// ====================== WALLET CONNECT (ethers.js) ======================
+// ====================== WALLET CONNECT ======================
+let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c Cartoons.io - Wallet Connect Ready', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
 
-    let currentAddress = null;
+    const loginBtn = document.getElementById('dynamicLoginBtn');
 
-const loginBtn = document.getElementById('dynamicLoginBtn');
+    loginBtn.addEventListener('click', async (e) => {
+        if (currentAddress) {
+            e.preventDefault();
+            toggleDropdown();
+            return;
+        }
 
-loginBtn.addEventListener('click', async (e) => {
-    if (currentAddress) {
-        e.preventDefault();
-        toggleDropdown();
-        return;
-    }
+        // Connect Wallet
+        try {
+            if (!window.ethereum) {
+                alert("Please install MetaMask or another wallet!");
+                return;
+            }
 
-    // Connect wallet logic (your existing code)...
-    // ... keep your connect code here ...
-});
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            currentAddress = accounts[0];
 
-function renderConnectedButton() {
-    loginBtn.innerHTML = `
-        ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}
-    `;
-}
+            console.log('✅ Wallet connected:', currentAddress);
 
-function toggleDropdown() {
-    // Remove old dropdown if exists
-    document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
+            // Update button without changing size
+            loginBtn.innerHTML = `👛 ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}`;
+            loginBtn.style.minWidth = '160px';
 
-    const dropdown = document.createElement('div');
-    dropdown.className = 'wallet-dropdown';
-    
-    dropdown.innerHTML = `
-        <a href="#" class="dropdown-item">Profile</a>
-        <a href="#" id="logout-btn" class="dropdown-item">Logout</a>
-    `;
-
-    loginBtn.style.position = 'relative';
-    loginBtn.appendChild(dropdown);
-
-    document.getElementById('logout-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        currentAddress = null;
-        loginBtn.textContent = 'login';
-        loginBtn.style.position = '';
+        } catch (error) {
+            console.error(error);
+            alert("Failed to connect wallet.");
+        }
     });
 
-    // Close when clicking outside
-    setTimeout(() => {
-        document.addEventListener('click', function handler(ev) {
-            if (!loginBtn.contains(ev.target)) {
-                dropdown.remove();
-                document.removeEventListener('click', handler);
-            }
+    function toggleDropdown() {
+        // Remove existing dropdowns
+        document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'wallet-dropdown';
+        dropdown.innerHTML = `
+            <a href="#" class="dropdown-item">Profile</a>
+            <a href="#" id="logout-btn" class="dropdown-item">Logout</a>
+        `;
+
+        loginBtn.style.position = 'relative';
+        loginBtn.appendChild(dropdown);
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            currentAddress = null;
+            loginBtn.textContent = 'login';
+            loginBtn.style.minWidth = '';
+            loginBtn.style.position = '';
         });
-    }, 10);
-}
+
+        // Close when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', function handler(ev) {
+                if (!loginBtn.contains(ev.target)) {
+                    dropdown.remove();
+                    document.removeEventListener('click', handler);
+                }
+            });
+        }, 10);
+    }
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
@@ -65,10 +77,10 @@ function toggleDropdown() {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
-            disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
+            faq: `<p>Q: What is Cartoons NFT? <br>A: Cartoons NFT is a collection of 7,777 cosmic-themed cartoon NFTs on Ethereum...</p>`,
+            disclaimer: `<p>Cryptocurrencies, NFTs, and blockchain-based assets are highly speculative and volatile. Always do your own research (DYOR).</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
-            privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
+            privacy: `<h4>Privacy Policy</h4><p>We respect your data. Full policy coming soon!</p>`
         };
 
         document.querySelectorAll('.legal-link').forEach(link => {
