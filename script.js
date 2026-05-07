@@ -1,8 +1,8 @@
-// ====================== WALLET CONNECT (Multi-Wallet Support) ======================
+// ====================== WALLET CONNECT (Ethereum Only) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io - Ethereum Wallet Connect', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
@@ -18,31 +18,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            let accounts;
-
-            // Try Phantom first (Solana)
-            if (window.solana && window.solana.isPhantom) {
-                const resp = await window.solana.connect();
-                currentAddress = resp.publicKey.toString();
-                console.log('✅ Phantom connected:', currentAddress);
-            } 
-            // Then try MetaMask / other EVM wallets
-            else if (window.ethereum) {
-                await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
-                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                currentAddress = accounts[0];
-                console.log('✅ MetaMask/EVM connected:', currentAddress);
-            } 
-            else {
-                alert("Please install MetaMask or Phantom wallet!");
+            if (!window.ethereum) {
+                alert("Please install MetaMask, Phantom (ETH), or another Ethereum wallet!");
                 return;
             }
+
+            // Force fresh permission request every time
+            await window.ethereum.request({
+                method: 'wallet_requestPermissions',
+                params: [{ eth_accounts: {} }]
+            });
+
+            const accounts = await window.ethereum.request({ 
+                method: 'eth_requestAccounts' 
+            });
+
+            currentAddress = accounts[0];
+
+            console.log('✅ Ethereum wallet connected:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            alert("Failed to connect wallet. Please try again.");
+            if (error.code === 4001) {
+                alert("You rejected the connection.");
+            } else {
+                alert("Failed to connect wallet. Please try again.");
+            }
         }
     });
 
