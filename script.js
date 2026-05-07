@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('✅ Wallet connected:', currentAddress);
 
             // Show as 0x...abcd
-            loginBtn.innerHTML = `0x${currentAddress.slice(0,2)}...${currentAddress.slice(-4)}`;
+            loginBtn.innerHTML = `${currentAddress.slice(0,2)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
