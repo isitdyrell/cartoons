@@ -17,11 +17,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const supabase = initSupabase();
 
-    // Check for existing session
+    // Try to get session
     const { data: { session } } = await supabase.auth.getSession();
     updateLoginUI(session);
 
-    // Listen for auth changes
     supabase.auth.onAuthStateChange((event, session) => {
         console.log('🔄 Auth event:', event);
         updateLoginUI(session);
@@ -55,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT? <br>A: Cartoons NFT is a collection of 7,777 cosmic-themed cartoon NFTs on Ethereum. We started as cute PFPs in 2022 and evolved through community ownership and a full artwork refresh (TOONUP) in 2025.</p>`,
-            disclaimer: `<p>Cryptocurrencies, NFTs, and blockchain-based assets are highly speculative and volatile. Past performance is not indicative of future results. Always do your own research (DYOR).</p>`,
+            faq: `<p>Q: What is Cartoons NFT? <br>A: Cartoons NFT is a collection of 7,777 cosmic-themed cartoon NFTs on Ethereum...</p>`,
+            disclaimer: `<p>Cryptocurrencies, NFTs, and blockchain-based assets are highly speculative and volatile. Always do your own research (DYOR).</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
             privacy: `<h4>Privacy Policy</h4><p>We respect your data. Full policy coming soon!</p>`
         };
@@ -88,7 +87,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const ethRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
                 const ethData = await ethRes.json();
                 const ethUsd = ethData.ethereum?.usd || 3400;
-
                 floorItem.textContent = `Floor: Check OpenSea ($${ethUsd})`;
             } catch (err) {
                 console.error('Floor price failed:', err);
