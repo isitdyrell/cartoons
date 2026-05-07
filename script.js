@@ -1,12 +1,12 @@
-// ====================== WALLET CONNECT (Ethereum Only) ======================
+// ====================== WALLET CONNECT (Aggressive Fresh Handshake) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io - Ethereum Wallet Connect', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io - Aggressive Fresh Handshake Mode', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Always start fresh
+    // Force fresh state
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (!window.ethereum) {
-                alert("Please install MetaMask, Phantom (ETH), or another Ethereum wallet!");
+                alert("Please install MetaMask or Phantom (Ethereum)!");
                 return;
             }
 
-            // Force fresh permission request every time
+            // Strongest possible fresh request
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
@@ -35,17 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             currentAddress = accounts[0];
 
-            console.log('✅ Ethereum wallet connected:', currentAddress);
+            console.log('✅ Fresh handshake:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            if (error.code === 4001) {
-                alert("You rejected the connection.");
-            } else {
-                alert("Failed to connect wallet. Please try again.");
-            }
+            alert("Failed to connect wallet. Please approve the connection popup.");
         }
     });
 
