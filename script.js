@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
+    // Load saved wallet from localStorage (persists across refreshes)
+    const savedAddress = localStorage.getItem('connectedWallet');
+    if (savedAddress) {
+        currentAddress = savedAddress;
+        updateButtonUI();
+    }
+
     loginBtn.addEventListener('click', async (e) => {
         if (currentAddress) {
             e.preventDefault();
@@ -23,16 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             currentAddress = accounts[0];
 
-            console.log('✅ Wallet connected:', currentAddress);
+            // Save to localStorage
+            localStorage.setItem('connectedWallet', currentAddress);
 
-            // Show as 0x...abcd
-            loginBtn.innerHTML = `${currentAddress.slice(0,2)}...${currentAddress.slice(-4)}`;
+            console.log('✅ Wallet connected:', currentAddress);
+            updateButtonUI();
 
         } catch (error) {
             console.error(error);
             alert("Failed to connect wallet.");
         }
     });
+
+    function updateButtonUI() {
+        loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
+    }
 
     function toggleDropdown() {
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
@@ -51,9 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             e.stopImmediatePropagation();
             
-            currentAddress = null;
-            loginBtn.textContent = 'login';
-            loginBtn.style.position = '';
+            logoutWallet();
         });
 
         // Close when clicking outside
@@ -66,6 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 10);
     }
+
+    function logoutWallet() {
+        currentAddress = null;
+        localStorage.removeItem('connectedWallet');
+        loginBtn.textContent = 'login';
+        loginBtn.style.position = '';
+        document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
+    }
+
+    // Clear wallet when tab is closed (but keep on refresh)
+    window.addEventListener('beforeunload', () => {
+        if (currentAddress) {
+            localStorage.removeItem('connectedWallet');
+        }
+    });
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
