@@ -1,4 +1,4 @@
-// ====================== WALLET CONNECT (Clean & Secure) ======================
+// ====================== WALLET CONNECT (Clean Session + Fresh Handshake) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,9 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Always start with clean state
-    currentAddress = null;
-    loginBtn.textContent = 'login';
+    // Load from sessionStorage (persists during active tab use)
+    const saved = sessionStorage.getItem('connectedWallet');
+    if (saved) {
+        currentAddress = saved;
+        loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
+    } else {
+        loginBtn.textContent = 'login';
+    }
 
     loginBtn.addEventListener('click', async (e) => {
         if (currentAddress) {
@@ -17,13 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Always force a fresh handshake when clicking login
         try {
             if (!window.ethereum) {
                 alert("Please install MetaMask or Phantom (Ethereum)!");
                 return;
             }
 
-            // Fresh handshake every time user clicks "login"
+            // Force permission prompt
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
@@ -32,13 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             currentAddress = accounts[0];
 
-            console.log('✅ Wallet connected:', currentAddress);
+            // Save to sessionStorage (clears when tab is closed)
+            sessionStorage.setItem('connectedWallet', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            alert("Connection cancelled or failed.");
+            alert("Failed to connect wallet.");
         }
     });
 
@@ -63,14 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function logoutWallet() {
         currentAddress = null;
+        sessionStorage.removeItem('connectedWallet');
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-        console.log('✅ Wallet logged out');
+        console.log('✅ Wallet fully logged out');
     }
 
     // ==================== LEGAL MODAL + FLOOR PRICE ====================
-    // (your existing code - unchanged)
+    // (keep your existing code here)
     const modal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
