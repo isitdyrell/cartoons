@@ -1,6 +1,6 @@
 // ====================== SUPABASE CONFIG ======================
 const SUPABASE_URL = 'https://rcuxlkyqnwouobitojso.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJ...';   // ← PASTE YOUR REAL ANON KEY HERE
+const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY
 // ============================================================
 
 let supabaseClient = null;
@@ -13,20 +13,19 @@ function initSupabase() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('%c🚀 Cartoons.io loaded on Vercel', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
 
     const supabase = initSupabase();
 
-    // Check current session
+    // Check session
     const { data: { session } } = await supabase.auth.getSession();
     updateLoginUI(session);
 
-    // Listen for login/logout
     supabase.auth.onAuthStateChange((event, session) => {
         updateLoginUI(session);
     });
 
-    // Login Button
+    // ==================== LOGIN BUTTON ====================
     const loginBtn = document.getElementById('dynamicLoginBtn');
     if (loginBtn) {
         loginBtn.addEventListener('click', async (e) => {
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await supabase.auth.signInWithOAuth({
                     provider: 'discord',
                     options: {
-                        redirectTo: 'https://cartoons-orpin.vercel.app'
+                        redirectTo: 'https://cartoons-orpin.vercel.app/api/auth/callback'
                     }
                 });
             }
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT?<br>A: ... (your full text)</p>`,
+            faq: `<p>Q: What is Cartoons NFT? ... (your full FAQ here)</p>`,
             disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
             privacy: `<h4>Privacy Policy</h4><p>We respect your data. Full policy coming soon!</p>`
@@ -77,14 +76,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.target === modal) modal.classList.remove('open');
         });
     }
-
-    // ==================== FLOOR PRICE ====================
-    const floorItem = document.getElementById('floorPriceItem');
-    if (floorItem) {
-        floorItem.textContent = 'Floor: Loading...';
-    }
 });
 
+// ==================== UPDATE LOGIN UI ====================
 function updateLoginUI(session) {
     const loginBtn = document.getElementById('dynamicLoginBtn');
     if (!loginBtn) return;
@@ -107,6 +101,5 @@ function updateLoginUI(session) {
         console.log(`✅ Logged in as ${name}`);
     } else {
         loginBtn.textContent = 'login';
-        console.log('👤 Not logged in');
     }
 }
