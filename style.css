@@ -708,14 +708,13 @@ footer p {
   padding: 0 1rem;
 }
 
-/* Login Dropdown */
-.login-dropdown-trigger:hover {
+.wallet-trigger:hover {
     background: #2b2263;
     color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
 }
 
 .dropdown-item:hover {
-    background: #ffffff;
+    background: #f0eef9;
 }

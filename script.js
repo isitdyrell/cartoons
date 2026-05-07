@@ -1,41 +1,101 @@
 // ====================== WALLET CONNECT (ethers.js) ======================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io - Wallet Connect Ready', 'color:#2b2263; font-weight:bold');
+    console.log('%c Cartoons.io - Wallet Connect Ready', 'color:#2b2263; font-weight:bold');
 
     let currentAddress = null;
+    let dropdownOpen = false;
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-loginBtn.addEventListener('click', async () => {
-    if (currentAddress) {
-        // Logout
-        currentAddress = null;
-        loginBtn.textContent = 'login';
-        loginBtn.style.padding = '';   // reset
-        loginBtn.style.minWidth = '';
-        return;
-    }
-
-    try {
-        if (!window.ethereum) {
-            alert("Please install MetaMask or another wallet!");
+    loginBtn.addEventListener('click', async (e) => {
+        // If already connected → toggle dropdown
+        if (currentAddress) {
+            e.preventDefault();
+            toggleDropdown();
             return;
         }
 
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        currentAddress = accounts[0];
+        // Not connected → connect wallet
+        try {
+            if (!window.ethereum) {
+                alert("Please install MetaMask or another wallet!");
+                return;
+            }
 
-        console.log('✅ Wallet connected:', currentAddress);
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            currentAddress = accounts[0];
 
-        loginBtn.innerHTML = `${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}`;
-        loginBtn.style.minWidth = '160px';   // keeps it nice and consistent
+            console.log('✅ Wallet connected:', currentAddress);
 
-    } catch (error) {
-        console.error(error);
-        alert("Failed to connect wallet.");
+            renderConnectedButton();
+
+        } catch (error) {
+            console.error(error);
+            alert("Failed to connect wallet. Please try again.");
+        }
+    });
+
+    function renderConnectedButton() {
+        loginBtn.innerHTML = `
+            <div class="wallet-trigger" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}
+                <span style="font-size:0.8rem;">▼</span>
+            </div>
+        `;
     }
-});
+
+    function toggleDropdown() {
+        // Remove any existing dropdown
+        const existing = document.querySelector('.wallet-dropdown');
+        if (existing) {
+            existing.remove();
+            return;
+        }
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'wallet-dropdown';
+        dropdown.style.cssText = `
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #2b2263;
+            border-radius: 10px;
+            padding: 8px 0;
+            margin-top: 6px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            min-width: 160px;
+            z-index: 10000;
+        `;
+
+        dropdown.innerHTML = `
+            <a href="#" class="dropdown-item" style="display:block; padding:10px 16px; color:#2b2263; text-decoration:none;">👤 Profile</a>
+            <a href="#" id="logout-option" class="dropdown-item" style="display:block; padding:10px 16px; color:#2b2263; text-decoration:none;">🚪 Logout</a>
+        `;
+
+        loginBtn.style.position = 'relative';
+        loginBtn.appendChild(dropdown);
+
+        // Logout handler
+        document.getElementById('logout-option').addEventListener('click', (e) => {
+            e.preventDefault();
+            currentAddress = null;
+            loginBtn.textContent = 'login';
+            loginBtn.style.position = '';
+            dropdown.remove();
+        });
+
+        // Close when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', function handler(ev) {
+                if (!loginBtn.contains(ev.target)) {
+                    dropdown.remove();
+                    document.removeEventListener('click', handler);
+                }
+            });
+        }, 10);
+    }
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
