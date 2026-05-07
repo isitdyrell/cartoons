@@ -1,12 +1,12 @@
-// ====================== WALLET CONNECT ======================
+// ====================== WALLET CONNECT (Aggressive Fresh Handshake) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io - Aggressive Fresh Handshake Mode', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Always start fresh on page load
+    // Force fresh state
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -23,20 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Force permission request
+            // Strongest possible fresh request
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
             });
 
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await window.ethereum.request({ 
+                method: 'eth_requestAccounts' 
+            });
+
             currentAddress = accounts[0];
+
+            console.log('✅ Fresh handshake:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            alert("Failed to connect wallet.");
+            alert("Failed to connect wallet. Please approve the connection popup.");
         }
     });
 
@@ -55,23 +60,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopImmediatePropagation();
             logoutWallet();
         });
+
+        setTimeout(() => {
+            document.addEventListener('click', function handler(ev) {
+                if (!loginBtn.contains(ev.target)) {
+                    dropdown.remove();
+                    document.removeEventListener('click', handler);
+                }
+            });
+        }, 10);
     }
 
     function logoutWallet() {
         currentAddress = null;
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
-
-        // Clear any saved data
-        if (window.ethereum && window.ethereum.removeAllListeners) {
-            window.ethereum.removeAllListeners();
-        }
-
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-        
-        alert("✅ You have been logged out.\n\nTo fully disconnect this site from your wallet, go to your wallet → Connected Sites → Disconnect cartoons-orpin.vercel.app");
+        console.log('✅ Wallet fully logged out');
     }
 
     // ==================== LEGAL MODAL ====================
