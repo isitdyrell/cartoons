@@ -1,0 +1,721 @@
+/* ==========================================================================
+   Global Settings & Font Force
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "vag-rundschrift-d", sans-serif !important;
+}
+
+/* Fallback if font fails */
+body, h1, h2, h3, h4, h5, h6, p, a, button, span, div {
+  font-family: "vag-rundschrift-d", Arial, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: #2b2263;
+}
+
+.divider-line {
+  height: 2px;
+  background-color: #2b2263;
+  width: calc(100% - 40px);     /* 20px margin on each side */
+  max-width: 1080px;
+  margin: 0 auto;               /* Perfect centering */
+  border-radius: 1px;
+}
+
+/* Spacers – white vertical padding blocks */
+.spacer-50 {
+  height: 50px;
+  background: #ffffff;
+  width: 100%;
+}
+
+.spacer-100 {
+  height: 100px;
+  background: #ffffff;
+  width: 100%;
+}
+
+.spacer-200 {
+  height: 200px;
+  background: #ffffff;
+  width: 100%;
+}
+
+/* Optional: responsive – make spacers smaller on mobile */
+@media (max-width: 768px) {
+  .spacer-50  { height: 30px; }
+  .spacer-100 { height: 60px; }
+  .spacer-200 { height: 120px; }
+}
+
+/* Container for the small logo */
+.image-block {
+  max-width: 1080px;
+  margin: 3rem auto 2rem;      /* Centers it + adds nice spacing */
+  text-align: center;            /* Makes the image sit on the left */
+}
+
+.small-image {
+  height: 40px;                /* ← This controls the actual logo size */
+  width: auto;
+}
+
+.small-image:hover {
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Button Styles (2 types only)
+   ========================================================================== */
+
+/* Filled / Primary buttons (login, Explore, Register, etc.) */
+.cta-button, .btn-primary, .connect-button {
+  background: white;
+  color: #2b2263;
+  border: 2px solid #2b2263;
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+  width: auto;                     /* ← prevents stretching */
+  min-width: 100px;                /* ← optional minimum width so they don't get too tiny */
+  max-width: 300px;                /* ← caps width – adjust if needed */
+  text-align: center;
+  white-space: nowrap;             /* ← keeps text on one line */
+}
+
+.cta-button:hover, .btn-primary:hover, .connect-button:hover {
+  background: #2b2263;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Text-only buttons (nav links, legal links, Gallery trigger) */
+.btn-text {
+  background: none;
+  border: none;
+  color: #2b2263;
+  font-size: 1.1rem;
+  font-weight: normal;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.btn-text:hover {
+  color: #b9b7ff;
+}
+
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;           /* Space between button and price */
+  margin-top: 1rem;
+}
+
+.floor-price {
+  color: #2b2263;
+  font-size: 1rem;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* Optional: make it look like a subtle tag */
+.floor-price {
+  background: rgba(43, 34, 99, 0.08);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.header-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo-link {
+  display: block;
+  transition: transform 0.3s ease;  /* Smooth zoom animation */
+}
+
+.logo-link:hover {
+  transform: scale(1.1);            /* Zoom to 120% on hover */
+}
+
+.logo {
+  height: 25px;
+  width: auto;
+}
+
+nav a {
+  color: #2b2263;
+  margin: 0 1rem;
+  text-decoration: none;           /* ← removes underline */
+  font-weight: normal;
+}
+
+nav a:hover {
+  color: #b9b7ff;                  /* ← restore your hover color */
+}
+
+/* ==========================================================================
+   Carousel Gallery (Section 1)
+   ========================================================================== */
+
+.gallery-carousel {
+  max-width: 1200px;              /* ← your desired max width */
+  margin: 0 auto 2rem;            /* centered + bottom space */
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  animation: slide 25s linear infinite;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: 350px;
+  height: 350px;
+  margin: 0 1rem;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+}
+
+.normal-img { opacity: 1; z-index: 2; }
+.hover-img   { opacity: 0; z-index: 1; }
+
+.carousel-item:hover {
+  transform: scale(1.08);
+}
+
+.carousel-item:hover .normal-img { opacity: 0; }
+.carousel-item:hover .hover-img   { opacity: 1; }
+
+@keyframes slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Centered heading with inline wordmark */
+.heading-wrapper {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.main-heading {
+  font-size: 2rem;
+  margin: 0;
+  color: #2b2263;
+  font-weight: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  line-height: 1;
+}
+
+.wordmark-inline {
+  height: 4rem;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -0.9rem;
+}
+
+/* ==========================================================================
+   White Block Sections
+   ========================================================================== */
+
+.white-block {
+  background: white;
+  width: 100%;
+  margin: 0 -2rem;
+  padding: 0 2rem;
+  display: flex;
+  align-items: stretch;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.white-block-wrapper {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.square-image {
+  width: 30%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0px;
+}
+
+.right-content {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin: 0 0 1rem;
+  color: #2b2263;
+}
+
+.checkmark-inline {
+  width: 0.9em;
+  height: auto;
+  display: inline-block;
+  vertical-align: -0.1em;
+  margin-left: 0.1em;
+}
+
+.section-blurb {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+  color: #2b2263;
+}
+
+/* Stats Carousel */
+.stats-carousel {
+  overflow: hidden;
+  margin: 0 0 3rem;
+  margin-top: -1rem;      /* Reduced from 3rem */
+  margin-bottom: 0rem;
+}
+
+.stats-track {
+  display: flex;
+  animation: stats-slide 28s linear infinite;
+  width: max-content;
+}
+
+.stat-item {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 0 3.5rem 0 0;
+  white-space: nowrap;
+  color: #2b2263;
+}
+
+@keyframes stats-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   Footer & Legal Block
+   ========================================================================== */
+
+.footer-legal {
+  background: white;
+  min-height: 30px;
+  padding: 1rem;
+}
+
+.footer-legal-links {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem 4rem;
+}
+
+.footer-legal-links a {
+  color: #2b2263;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: .75rem;
+  transition: color 0.3s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #b9b7ff;
+}
+
+footer {
+  background: #ffffff;
+  color: #2b2263;
+  padding: 0.5rem;
+  position: static;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.footer-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem;
+  flex-wrap: wrap;
+}
+
+footer p {
+  margin: 1;
+  font-size: .75rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.social-icon {
+  width: 30px;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover .social-icon {
+  transform: rotate(-10deg);
+}
+
+/* ==========================================================================
+   Legal Modals
+   ========================================================================== */
+
+.legal-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  width: 350px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.legal-modal.open {
+  display: block;
+}
+
+.modal-content {
+  padding: 0;
+}
+
+.modal-header {
+  background: #2b2263;
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 2;
+  letter-spacing: 0.05em;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 420px;
+  overflow-y: auto;
+  font-size: .75rem;
+  line-height: 1.2;
+  color: #2b2263;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .legal-modal {
+    width: 92%;
+    right: 4%;
+    bottom: 90px;
+  }
+}
+
+/* ==========================================================================
+   Community Features Sections
+   ========================================================================== */
+
+.features-section {
+  padding: 2rem 2rem;
+  background: #ffffff;
+}
+
+/* Base container - 1080px centered */
+.features-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+}
+
+/* Left-aligned version */
+.features-container.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Right-aligned version */
+.features-container.right {
+  margin-left: auto;           /* Pushes the block to the right */
+  align-items: flex-start;
+  text-align: left;
+  max-width: 540px;
+  width: 100%;
+  margin-left: 620px;          /* ← Adjust this number (higher = more to the right) */
+}
+
+.features-title {
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+  color: #2b2263;
+  max-width: 540px;
+  width: 100%;
+  text-align: left;
+}
+
+/* Feature text */
+.feature-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #2b2263;
+  max-width: 540px;
+  width: 100%;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  flex: 1 1 300px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.feature-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: -2.5rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .features-title {
+    font-size: 2.4rem;
+  }
+  
+  .feature-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==========================================================================
+   Login Modal – Separate from Legal Modal
+   ========================================================================== */
+
+.login-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-modal-content {
+  background: white;
+  width: 380px;
+  border-radius: 10px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.login-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #2b2263;
+  line-height: 1;
+}
+
+.login-modal h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: normal;
+  color: #2b2263;
+}
+
+/* Email Login */
+.email-login input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #2b2263;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Wallet Buttons */
+.wallet-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wallet-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem;
+  border: 2px solid #eeeeee;
+  border-radius: 10px;
+  background: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: normal;
+  color: #2b2263;
+}
+
+.wallet-btn img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.wallet-btn:hover {
+  border-color: #2b2263;
+  background: #f8f8f8;
+}
+
+.view-all {
+  background: #2b2263;
+  color: white;
+  border: 2px solid #2b2263;
+  justify-content: center;
+}
+
+.view-all:hover {
+  border: 2px solid #2b2263;
+  background: #ffffff;
+  font-weight: normal;
+  color: #2b2263;
+}
+
+.divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #999;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #eeeeee;
+}
+
+.divider span {
+  background: white;
+  padding: 0 1rem;
+}
+
+/* Login Dropdown */
+.login-dropdown-trigger:hover {
+    background: #2b2263;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.dropdown-item:hover {
+    background: #ffffff;
+}

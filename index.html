@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - cartoons.io</title>
+  <link rel="stylesheet" href="https://use.typekit.net/eyd0ghc.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<!-- Legal Modal / Chatbox -->
+<div class="legal-modal" id="legalModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Title</h3>
+      <button class="modal-close" id="modalClose">x</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content changes based on which link was clicked -->
+    </div>
+  </div>
+</div>
+
+<body>
+<header>
+  <div class="header-container">
+    <!-- Logo linked to home -->
+    <a href="index.html" class="logo-link">
+      <img src="assets/wordmark.png" alt="Cartoons Wordmark" class="logo">
+    </a>
+
+    <!-- Navigation -->
+    <nav>
+    <a href="index.html">about</a>  
+    <a href="https://opensea.io/collection/cartoonsnft/explore" target="_blank" rel="noopener noreferrer">nfts</a>
+    <a href="community.html">community</a>
+    <a href="#" id="dynamicLoginBtn" class="connect-button">login</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- Carousel Gallery – just below hero -->
+<section class="gallery-carousel">
+  <div class="carousel-container">
+    <div class="carousel-track">
+      <!-- Example for cloudy -->
+      <div class="carousel-item">
+        <img src="assets/gallery1/cloudy.png" alt="Cloudy normal" class="normal-img">
+        <img src="assets/gallery1/cloudy2.png" alt="Cloudy hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/lucky.png" alt="Lucky normal" class="normal-img">
+        <img src="assets/gallery1/lucky2.png" alt="Lucky hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/apollo.png" alt="Apollo normal" class="normal-img">
+        <img src="assets/gallery1/apollo2.png" alt="Apollo hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/burnie.png" alt="Burnie normal" class="normal-img">
+        <img src="assets/gallery1/burnie2.png" alt="Burnie hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/luna.png" alt="Luna normal" class="normal-img">
+        <img src="assets/gallery1/luna2.png" alt="Luna hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/telly.png" alt="Telly normal" class="normal-img">
+        <img src="assets/gallery1/telly2.png" alt="Telly hover" class="hover-img">
+      </div>
+
+      <!-- Duplicates – same structure -->
+      <div class="carousel-item">
+        <img src="assets/gallery1/cloudy.png" alt="Cloudy normal" class="normal-img">
+        <img src="assets/gallery1/cloudy2.png" alt="Cloudy hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/lucky.png" alt="Lucky normal" class="normal-img">
+        <img src="assets/gallery1/lucky2.png" alt="Lucky hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/apollo.png" alt="Apollo normal" class="normal-img">
+        <img src="assets/gallery1/apollo2.png" alt="Apollo hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/burnie.png" alt="Burnie normal" class="normal-img">
+        <img src="assets/gallery1/burnie2.png" alt="Burnie hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/luna.png" alt="Luna normal" class="normal-img">
+        <img src="assets/gallery1/luna2.png" alt="Luna hover" class="hover-img">
+      </div>
+
+      <div class="carousel-item">
+        <img src="assets/gallery1/telly.png" alt="Telly normal" class="normal-img">
+        <img src="assets/gallery1/telly2.png" alt="Telly hover" class="hover-img">
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Centered heading with wordmark logo for "cartoons" -->
+<div class="heading-wrapper">
+  <h2 class="main-heading">
+    we are all
+    <img src="assets/wordmark.png" alt="cartoons" class="wordmark-inline">
+  </h2>
+</div>
+
+<!-- SPACER -->
+<div class="spacer-100"></div>
+
+<!-- Centered 2px line with 20px side margins -->
+<div class="divider-line"></div>
+
+<!-- Section 1 - Left aligned -->
+<section class="features-section">
+  <div class="features-container left">
+    <h2 class="features-title">welcome to the clouds</h2>
+    <p class="feature-text">
+      One of the most fascinating things about the NFT space is that the vast majority of collectors rep cartoon style jpegs, in this sense "we are all cartoons". The space is one big echo chamber and our holders are also collectors of many other interesting tokenized art.
+    </p>
+  </div>
+</section>
+
+<!-- SPACER -->
+<div class="spacer-50"></div>
+
+<!-- Section 2 - Right aligned -->
+<section class="features-section">
+  <div class="features-container right">
+    <h2 class="features-title">the TOONUP story</h2>
+    <p class="feature-text">
+      One of the most fascinating things about the NFT space is that the vast majority of collectors rep cartoon style jpegs, in this sense "we are all cartoons". The space is one big echo chamber and our holders are also collectors of many other interesting tokenized art.
+    </p>
+  </div>
+</section>
+
+<!-- SPACER -->
+<div class="spacer-50"></div>
+
+<!-- Section 3 - Left aligned -->
+<section class="features-section">
+  <div class="features-container left">
+    <h2 class="features-title">we are all cartoons?</h2>
+    <p class="feature-text">
+      It means we are all one big web3 family. Our friends have collect!
+    </p>
+  </div>
+</section>
+
+<!-- SPACER -->
+<div class="spacer-50"></div>
+
+<!-- Team Block -->
+<section class="features-section">
+  <div class="features-container">
+    <h2 class="features-title">the TOON crew</h2>
+
+  <div class="features-grid">
+    <div class="feature-item">
+      <img src="assets/teamgallery/dyrell.png" alt="Feature 1" class="feature-image">
+      <h3 class="feature-subtitle">dyrell</h3> 
+    </div>
+
+    <div class="feature-item">
+      <img src="assets/teamgallery/moee.png" alt="Feature 2" class="feature-image">
+      <h3 class="feature-subtitle">moee</h3>
+    </div>
+
+    <div class="feature-item">
+      <img src="assets/teamgallery/corai.png" alt="Feature 3" class="feature-image">
+      <h3 class="feature-subtitle">corai</h3>
+    </div>
+  </div>
+</section>
+
+<!-- SPACER -->
+<div class="spacer-50"></div>
+
+<!-- Section 4 - Right aligned -->
+<section class="features-section">
+  <div class="features-container right">
+    <h2 class="features-title">our collection</h2>
+    <p class="feature-text">
+      One of the most fascinating things about the NFT space is that the vast majority of collectors rep cartoon style jpegs, in this sense "we are all cartoons". The space is one big echo chamber and our holders are also collectors of many other interesting tokenized art.
+    </p>
+    
+    <!-- CTA group stays inside the right container -->
+    <div class="cta-group">
+      <a href="https://opensea.io/collection/cartoonsnft/explore" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="cta-button">Explore</a>
+      <span class="floor-price" id="floorPriceItem">Floor: Loading...</span> 
+    </div>
+  </div>
+</section>
+
+<!-- SPACER -->
+<div class="spacer-100"></div>
+
+<div class="image-block">
+  <img src="assets/logo.png" alt="Cartoons Logo" class="small-image">
+</div>
+
+<!-- Centered 2px line with 20px side margins -->
+<div class="divider-line"></div>
+
+<footer>
+  <div class="footer-container">
+    <p>Cartoons, LLC. All Rights Reserved. &copy;</p>
+    
+    <!-- Legal links centered -->
+    <div class="footer-legal-links">
+      <a href="#" class="legal-link" data-type="faq">faq</a>
+      <a href="#" class="legal-link" data-type="disclaimer">disclaimer</a>
+      <a href="#" class="legal-link" data-type="terms">terms of use</a>
+      <a href="#" class="legal-link" data-type="privacy">privacy policy</a>
+    </div>
+
+    <div class="social-links">
+      <a href="https://x.com/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <img src="assets/icons/xBL.png" alt="X icon" class="social-icon">
+      </a>
+      <a href="https://discord.gg/Xs4Cnn3bAp" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+        <img src="assets/icons/discordBL.png" alt="Discord icon" class="social-icon">
+      </a>
+      <a href="https://opensea.io/collection/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
+        <img src="assets/icons/openseaBL.png" alt="OpenSea icon" class="social-icon">
+      </a>
+    </div>
+  </div>
+</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
