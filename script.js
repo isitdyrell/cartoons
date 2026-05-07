@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Load saved wallet from localStorage (persists across refreshes)
-    const savedAddress = localStorage.getItem('connectedWallet');
+    // Use sessionStorage so it survives page navigation but clears on tab close
+    const savedAddress = sessionStorage.getItem('connectedWallet');
     if (savedAddress) {
         currentAddress = savedAddress;
         updateButtonUI();
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             currentAddress = accounts[0];
 
-            // Save to localStorage
-            localStorage.setItem('connectedWallet', currentAddress);
+            // Save to sessionStorage (clears when tab is closed)
+            sessionStorage.setItem('connectedWallet', currentAddress);
 
             console.log('✅ Wallet connected:', currentAddress);
             updateButtonUI();
@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
-            
             logoutWallet();
         });
 
@@ -79,18 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function logoutWallet() {
         currentAddress = null;
-        localStorage.removeItem('connectedWallet');
+        sessionStorage.removeItem('connectedWallet');
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
     }
-
-    // Clear wallet when tab is closed (but keep on refresh)
-    window.addEventListener('beforeunload', () => {
-        if (currentAddress) {
-            localStorage.removeItem('connectedWallet');
-        }
-    });
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
