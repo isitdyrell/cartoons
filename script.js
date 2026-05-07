@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log('✅ Wallet connected:', currentAddress);
 
-            loginBtn.innerHTML = `${currentAddress.slice(0,2)}...${currentAddress.slice(-4)}`;
-            loginBtn.style.minWidth = '160px';
+            // Show as 0x...abcd
+            loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
@@ -47,17 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.style.position = 'relative';
         loginBtn.appendChild(dropdown);
 
-        // Logout - Fixed version
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
             
             currentAddress = null;
             loginBtn.textContent = 'login';
-            loginBtn.style.minWidth = '';
             loginBtn.style.position = '';
-            document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
         });
+
+        // Close when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', function handler(ev) {
+                if (!loginBtn.contains(ev.target)) {
+                    dropdown.remove();
+                    document.removeEventListener('click', handler);
+                }
+            });
+        }, 10);
     }
 
     // ==================== LEGAL MODAL ====================
