@@ -1,45 +1,46 @@
-// ====================== SUPABASE CONFIG ======================
-const SUPABASE_URL = 'https://rcuxlkyqnwouobitojso.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY
+// ====================== DYNAMIC WALLET CONFIG ======================
+const DYNAMIC_ENV_ID = '7aed5475-3b05-400a-a575-b757fca5b134';   // ← Paste your Dynamic Environment ID
 // ============================================================
 
-let supabaseClient = null;
-
-function initSupabase() {
-    if (!supabaseClient) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    }
-    return supabaseClient;
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded with Dynamic Wallet', 'color:#2b2263; font-weight:bold');
 
-    const supabase = initSupabase();
+    // Load Dynamic SDK
+    const script = document.createElement('script');
+    script.src = 'https://cdn.dynamic.xyz/sdk/v0.0.0/dynamic.js';
+    script.async = true;
+    document.head.appendChild(script);
 
-    // Force session check
-    const { data: { session } } = await supabase.auth.getSession();
-    updateLoginUI(session);
+    script.onload = () => {
+        console.log('✅ Dynamic SDK loaded');
 
-    supabase.auth.onAuthStateChange((event, session) => {
-        console.log('🔄 Auth event:', event);
-        updateLoginUI(session);
-    });
-
-    const loginBtn = document.getElementById('dynamicLoginBtn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await supabase.auth.signInWithOAuth({
-                provider: 'discord',
-                options: {
-                    redirectTo: 'https://cartoons-orpin.vercel.app/api/auth/callback'
-                }
-            });
+        // Initialize Dynamic
+        const dynamic = new window.Dynamic({
+            environmentId: DYNAMIC_ENV_ID,
+            wallets: ['metamask', 'phantom', 'rainbow', 'walletconnect'],
         });
-    }
 
-    // LEGAL MODAL
+        const loginBtn = document.getElementById('dynamicLoginBtn');
+
+        loginBtn.addEventListener('click', async () => {
+            try {
+                const result = await dynamic.connect();
+                if (result.address) {
+                    console.log('✅ Wallet connected:', result.address);
+                    loginBtn.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:8px; cursor:pointer; padding:4px 12px; border-radius:10px;">
+                            <span>👛 ${result.address.slice(0,6)}...${result.address.slice(-4)}</span>
+                        </div>
+                    `;
+                    // TODO: Later we will check if they own a Cartoons NFT here
+                }
+            } catch (err) {
+                console.error('Wallet connect failed', err);
+            }
+        });
+    };
+
+    // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT?... (your full faq)</p>`,
+            faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
             disclaimer: `<p>Cryptocurrencies... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
             privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // FLOOR PRICE
+    // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
@@ -89,28 +90,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         setInterval(updateFloorPrice, 300000);
     }
 });
-
-function updateLoginUI(session) {
-    const loginBtn = document.getElementById('dynamicLoginBtn');
-    if (!loginBtn) return;
-
-    if (session?.user) {
-        const metadata = session.user.user_metadata || {};
-        const name = metadata.full_name || metadata.global_name || metadata.name || 'User';
-        let avatar = metadata.avatar_url;
-
-        if (!avatar && metadata.id && metadata.avatar) {
-            avatar = `https://cdn.discordapp.com/avatars/${metadata.id}/${metadata.avatar}.png`;
-        }
-
-        loginBtn.innerHTML = `
-            <div style="display:flex; align-items:center; gap:8px; cursor:pointer; padding:4px 12px; border-radius:10px;">
-                <img src="${avatar}" style="width:28px;height:28px;border-radius:50%;border:2px solid #2b2263;" onerror="this.src='https://via.placeholder.com/28?text=👤'">
-                <span>${name}</span>
-            </div>
-        `;
-        console.log(`✅ Logged in as ${name}`);
-    } else {
-        loginBtn.textContent = 'login';
-    }
-}
