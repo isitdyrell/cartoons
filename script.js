@@ -1,12 +1,12 @@
-// ====================== WALLET CONNECT ======================
+// ====================== WALLET CONNECT (Fresh Every Time) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded - Fresh Wallet Mode', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Always start fresh - no saved wallet
+    // Force fresh state on every page load
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -23,29 +23,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // FORCE fresh permission request every time
+            // Force fresh permission request
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
             });
 
-            // Then get the accounts
             const accounts = await window.ethereum.request({ 
                 method: 'eth_requestAccounts' 
             });
 
             currentAddress = accounts[0];
 
-            console.log('✅ Fresh wallet handshake:', currentAddress);
+            console.log('✅ Fresh handshake successful:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
             if (error.code === 4001) {
-                alert("You rejected the connection.");
+                alert("Connection rejected.");
             } else {
-                alert("Failed to connect wallet. Please try again.");
+                alert("Failed to connect wallet.");
             }
         }
     });
