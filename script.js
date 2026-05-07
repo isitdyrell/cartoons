@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Clear any previous session on load
+    // Always start fresh
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -17,31 +17,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Always require fresh connection
         try {
             if (!window.ethereum) {
                 alert("Please install MetaMask or another wallet!");
                 return;
             }
 
-            // Force fresh request every time
+            // Force fresh permission request
+            await window.ethereum.request({
+                method: 'wallet_requestPermissions',
+                params: [{ eth_accounts: {} }]
+            });
+
             const accounts = await window.ethereum.request({ 
                 method: 'eth_requestAccounts' 
             });
 
             currentAddress = accounts[0];
 
-            console.log('✅ Wallet connected:', currentAddress);
+            console.log('✅ Fresh wallet connection:', currentAddress);
 
-            // Update button
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
             if (error.code === 4001) {
-                alert("You rejected the connection.");
+                alert("You rejected the connection request.");
             } else {
-                alert("Failed to connect wallet.");
+                alert("Failed to connect wallet. Please try again.");
             }
         }
     });
@@ -65,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             logoutWallet();
         });
 
-        // Close when clicking outside
         setTimeout(() => {
             document.addEventListener('click', function handler(ev) {
                 if (!loginBtn.contains(ev.target)) {
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-        console.log('✅ Wallet logged out');
+        console.log('✅ Wallet fully logged out');
     }
 
     // ==================== LEGAL MODAL ====================
