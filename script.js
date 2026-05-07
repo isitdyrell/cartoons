@@ -1,33 +1,43 @@
-// ====================== DYNAMIC CONFIG ======================
-const DYNAMIC_ENV_ID = '7aed5475-3b05-400a-a575-b757fca5b134';   // ← Use your actual ID from Dynamic dashboard
-// ============================================================
+// ====================== WALLET CONNECT (ethers.js) ======================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io with Dynamic', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io - Wallet Connect Ready', 'color:#2b2263; font-weight:bold');
+
+    let currentAddress = null;
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Initialize Dynamic
-    const dynamic = new window.Dynamic({
-        environmentId: DYNAMIC_ENV_ID,
-        wallets: ['metamask', 'phantom', 'rainbow', 'walletconnect'],
-    });
-
     loginBtn.addEventListener('click', async () => {
-        try {
-            const result = await dynamic.connect();
-            console.log('✅ Connected:', result);
+        if (currentAddress) {
+            // Logout
+            currentAddress = null;
+            loginBtn.textContent = 'login';
+            return;
+        }
 
-            if (result.address) {
-                loginBtn.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:8px; cursor:pointer; padding:4px 12px; border-radius:10px;">
-                        👛 ${result.address.slice(0,6)}...${result.address.slice(-4)}
-                    </div>
-                `;
+        try {
+            if (!window.ethereum) {
+                alert("Please install MetaMask, Phantom, or another wallet!");
+                return;
             }
+
+            // Request connection
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            currentAddress = accounts[0];
+
+            console.log('✅ Wallet connected:', currentAddress);
+
+            loginBtn.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px; cursor:pointer; padding:4px 12px; border-radius:10px;">
+                    👛 ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}
+                </div>
+            `;
+
+            // Future: Check NFT ownership here
+
         } catch (error) {
-            console.error('Dynamic connect error:', error);
-            alert('Failed to connect wallet. Please try again.');
+            console.error(error);
+            alert("Failed to connect wallet. Please try again.");
         }
     });
 
@@ -40,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
             faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
-            disclaimer: `<p>Cryptocurrencies... (your disclaimer)</p>`,
+            disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
             privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
         };
