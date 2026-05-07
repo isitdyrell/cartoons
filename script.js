@@ -7,39 +7,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    loginBtn.addEventListener('click', async () => {
-        if (currentAddress) {
-            // Logout
-            currentAddress = null;
-            loginBtn.textContent = 'login';
+loginBtn.addEventListener('click', async () => {
+    if (currentAddress) {
+        // Logout
+        currentAddress = null;
+        loginBtn.textContent = 'login';
+        loginBtn.style.padding = '';   // reset
+        loginBtn.style.minWidth = '';
+        return;
+    }
+
+    try {
+        if (!window.ethereum) {
+            alert("Please install MetaMask or another wallet!");
             return;
         }
 
-        try {
-            if (!window.ethereum) {
-                alert("Please install MetaMask, Phantom, or another wallet!");
-                return;
-            }
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        currentAddress = accounts[0];
 
-            // Request connection
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            currentAddress = accounts[0];
+        console.log('✅ Wallet connected:', currentAddress);
 
-            console.log('✅ Wallet connected:', currentAddress);
+        loginBtn.innerHTML = `${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}`;
+        loginBtn.style.minWidth = '160px';   // keeps it nice and consistent
 
-            loginBtn.innerHTML = `
-                <div style="display:flex; align-items:center; gap:2px; cursor:pointer; padding:0.8rem 1.8rem; border-radius:10px;">
-                    ${currentAddress.slice(0,4)}...${currentAddress.slice(-4)}
-                </div>
-            `;
-
-            // Future: Check NFT ownership here
-
-        } catch (error) {
-            console.error(error);
-            alert("Failed to connect wallet. Please try again.");
-        }
-    });
+    } catch (error) {
+        console.error(error);
+        alert("Failed to connect wallet.");
+    }
+});
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
