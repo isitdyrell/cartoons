@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const supabase = initSupabase();
 
-    // Check session
+    // Force session check
     const { data: { session } } = await supabase.auth.getSession();
     updateLoginUI(session);
 
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateLoginUI(session);
     });
 
-    // ==================== LOGIN BUTTON ====================
     const loginBtn = document.getElementById('dynamicLoginBtn');
     if (loginBtn) {
         loginBtn.addEventListener('click', async (e) => {
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // ==================== LEGAL MODAL ====================
+    // LEGAL MODAL
     const modal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
@@ -48,10 +47,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT? <br>A: Cartoons NFT is a collection of 7,777 cosmic-themed cartoon NFTs on Ethereum...</p>`,
-            disclaimer: `<p>Cryptocurrencies, NFTs, and blockchain-based assets are highly speculative and volatile. Always do your own research (DYOR).</p>`,
+            faq: `<p>Q: What is Cartoons NFT?... (your full faq)</p>`,
+            disclaimer: `<p>Cryptocurrencies... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
-            privacy: `<h4>Privacy Policy</h4><p>We respect your data. Full policy coming soon!</p>`
+            privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
         };
 
         document.querySelectorAll('.legal-link').forEach(link => {
@@ -72,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // ==================== FLOOR PRICE ====================
+    // FLOOR PRICE
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
@@ -83,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const ethUsd = ethData.ethereum?.usd || 3400;
                 floorItem.textContent = `Floor: Check OpenSea ($${ethUsd})`;
             } catch (err) {
-                console.error('Floor price failed:', err);
                 floorItem.textContent = 'Floor: —';
             }
         }
@@ -92,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ==================== UPDATE LOGIN UI ====================
 function updateLoginUI(session) {
     const loginBtn = document.getElementById('dynamicLoginBtn');
     if (!loginBtn) return;
