@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Always start fresh
+    // Always start fresh - no saved wallet
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -23,26 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Force fresh permission request
+            // FORCE fresh permission request every time
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
             });
 
+            // Then get the accounts
             const accounts = await window.ethereum.request({ 
                 method: 'eth_requestAccounts' 
             });
 
             currentAddress = accounts[0];
 
-            console.log('✅ Fresh wallet connection:', currentAddress);
+            console.log('✅ Fresh wallet handshake:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
             if (error.code === 4001) {
-                alert("You rejected the connection request.");
+                alert("You rejected the connection.");
             } else {
                 alert("Failed to connect wallet. Please try again.");
             }
