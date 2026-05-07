@@ -708,43 +708,33 @@ footer p {
   padding: 0 1rem;
 }
 
-/* Make sure the login button NEVER changes size */
+/* Force consistent button size */
 .connect-button {
     padding: 0.8rem 1.8rem !important;
-    min-width: 120px;
-    text-align: center;
-    transition: none !important;           /* Disable any scaling */
+    min-width: 130px !important;
+    height: 52px !important;           /* Fixed height */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s !important;
 }
 
 .connect-button:hover {
-    transform: none !important;            /* Prevent any growth */
-    background: #2b2263;
-    color: white;
+    transform: none !important;
 }
 
-/* Dropdown styling */
-.wallet-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border: 2px solid #2b2263;
-    border-radius: 10px;
-    padding: 8px 0;
-    margin-top: 4px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-    min-width: 160px;
-    z-index: 10000;           /* Very important */
-}
-
+/* Dropdown hover - only text color change */
 .dropdown-item {
     display: block;
     padding: 10px 16px;
     color: #2b2263;
     text-decoration: none;
     font-size: 1rem;
+    font-weight: normal;
+    transition: color 0.2s;
 }
 
 .dropdown-item:hover {
-    background: #f0eef9;
+    color: #b9b7ff;           /* Your preferred hover color */
+    background: transparent;  /* No background change */
 }

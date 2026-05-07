@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Connect Wallet
+        // Connect wallet
         try {
             if (!window.ethereum) {
                 alert("Please install MetaMask or another wallet!");
@@ -25,8 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log('✅ Wallet connected:', currentAddress);
 
-            // Update button without changing size
-            loginBtn.innerHTML = `👛 ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}`;
+            loginBtn.innerHTML = `${currentAddress.slice(0,2)}...${currentAddress.slice(-4)}`;
             loginBtn.style.minWidth = '160px';
 
         } catch (error) {
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function toggleDropdown() {
-        // Remove existing dropdowns
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
 
         const dropdown = document.createElement('div');
@@ -49,24 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.style.position = 'relative';
         loginBtn.appendChild(dropdown);
 
-        // Logout
+        // Logout - Fixed version
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopImmediatePropagation();
+            
             currentAddress = null;
             loginBtn.textContent = 'login';
             loginBtn.style.minWidth = '';
             loginBtn.style.position = '';
+            document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
         });
-
-        // Close when clicking outside
-        setTimeout(() => {
-            document.addEventListener('click', function handler(ev) {
-                if (!loginBtn.contains(ev.target)) {
-                    dropdown.remove();
-                    document.removeEventListener('click', handler);
-                }
-            });
-        }, 10);
     }
 
     // ==================== LEGAL MODAL ====================
@@ -77,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (modal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT? <br>A: Cartoons NFT is a collection of 7,777 cosmic-themed cartoon NFTs on Ethereum...</p>`,
-            disclaimer: `<p>Cryptocurrencies, NFTs, and blockchain-based assets are highly speculative and volatile. Always do your own research (DYOR).</p>`,
+            faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
+            disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
-            privacy: `<h4>Privacy Policy</h4><p>We respect your data. Full policy coming soon!</p>`
+            privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
         };
 
         document.querySelectorAll('.legal-link').forEach(link => {
