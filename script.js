@@ -1,72 +1,31 @@
 // ====================== SUPABASE CONFIG ======================
 const SUPABASE_URL = 'https://rcuxlkyqnwouobitojso.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY HERE
+const SUPABASE_ANON_KEY = 'eyJ...';   // ← keep your real key
+// ============================================================
+Then replace the entire login button section (the handleAuthCallback and updateLoginUI parts) with cleaner code. But for now, just do this quick test:
+Replace your current script.js with this updated version (I kept your legal modal + floor price):
+JavaScript// ====================== SUPABASE CONFIG ======================
+const SUPABASE_URL = 'https://rcuxlkyqnwouobitojso.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY
 // ============================================================
 
 let supabaseClient = null;
 
 function initSupabase() {
     if (!supabaseClient) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: { detectSessionInUrl: true, persistSession: true }
-        });
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
     return supabaseClient;
 }
 
-// Stronger manual session recovery from URL hash
-async function recoverSessionFromHash() {
-    const hash = window.location.hash;
-    if (!hash || !hash.includes('access_token')) return null;
-
-    console.log('🔑 OAuth token found in URL – attempting manual recovery...');
-    const supabase = initSupabase();
-
-    try {
-        // Extract tokens from hash
-        const params = new URLSearchParams(hash.substring(1));
-        const accessToken = params.get('access_token');
-        const refreshToken = params.get('refresh_token');
-
-        if (accessToken) {
-            const { data, error } = await supabase.auth.setSession({
-                access_token: accessToken,
-                refresh_token: refreshToken
-            });
-
-            if (error) console.error('setSession error:', error);
-            if (data.session) {
-                console.log('✅ Session manually set successfully!');
-                // Clean the URL
-                window.history.replaceState({}, document.title, window.location.pathname);
-                return data.session;
-            }
-        }
-    } catch (e) {
-        console.error('Manual recovery failed:', e);
-    }
-    return null;
-}
-
-// ==================== MAIN INIT ====================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('%c🚀 Cartoons.io script loaded', 'color:#2b2263; font-weight:bold');
-
     const supabase = initSupabase();
 
-    // Try to recover session from hash first
-    let session = await recoverSessionFromHash();
-
-    // Fallback
-    if (!session) {
-        const { data } = await supabase.auth.getSession();
-        session = data.session;
-    }
-
+    // Check session
+    const { data: { session } } = await supabase.auth.getSession();
     updateLoginUI(session);
 
     supabase.auth.onAuthStateChange((event, session) => {
-        console.log('🔄 Auth event:', event);
         updateLoginUI(session);
     });
 
@@ -76,12 +35,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         loginBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             const { data: { session } } = await supabase.auth.getSession();
+
             if (session) {
                 await supabase.auth.signOut();
             } else {
                 await supabase.auth.signInWithOAuth({
                     provider: 'discord',
-                    options: { redirectTo: window.location.origin + window.location.pathname }
+                    options: {
+                        redirectTo: 'https://cartoons-orpin.vercel.app'
+                    }
                 });
             }
         });
@@ -142,32 +104,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ==================== UPDATE LOGIN UI ====================
 function updateLoginUI(session) {
     const loginBtn = document.getElementById('dynamicLoginBtn');
     if (!loginBtn) return;
 
     if (session?.user) {
         const metadata = session.user.user_metadata || {};
-        const discordName = metadata.full_name || metadata.global_name || metadata.name || 'dyrell';
-        let avatarUrl = metadata.avatar_url || metadata.picture;
-
-        if (!avatarUrl && metadata.id && metadata.avatar) {
-            avatarUrl = `https://cdn.discordapp.com/avatars/${metadata.id}/${metadata.avatar}.png`;
-        }
+        const name = metadata.full_name || metadata.global_name || metadata.name || 'User';
+        const avatar = metadata.avatar_url || `https://cdn.discordapp.com/avatars/${metadata.id}/${metadata.avatar}.png`;
 
         loginBtn.innerHTML = `
-            <div style="display:flex; align-items:center; gap:8px; cursor:pointer; padding:4px 12px; border-radius:10px;">
-                <img src="${avatarUrl}" 
-                     style="width:28px; height:28px; border-radius:50%; border:2px solid #2b2263;" 
-                     onerror="this.src='https://via.placeholder.com/28?text=👤'">
-                <span>${discordName}</span>
+            <div style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <img src="${avatar}" style="width:28px;height:28px;border-radius:50%;border:2px solid #2b2263;" onerror="this.src='https://via.placeholder.com/28?text=👤'">
+                <span>${name}</span>
             </div>
         `;
-
-        console.log(`✅ Logged in as ${discordName}`);
+        console.log(`✅ Logged in as ${name}`);
     } else {
         loginBtn.textContent = 'login';
-        console.log('👤 Not logged in - storage still blocked');
     }
 }
