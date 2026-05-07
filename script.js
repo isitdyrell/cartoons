@@ -6,12 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Use sessionStorage so it survives page navigation but clears on tab close
-    const savedAddress = sessionStorage.getItem('connectedWallet');
-    if (savedAddress) {
-        currentAddress = savedAddress;
-        updateButtonUI();
-    }
+    // Clear any previous session on load
+    currentAddress = null;
+    loginBtn.textContent = 'login';
 
     loginBtn.addEventListener('click', async (e) => {
         if (currentAddress) {
@@ -20,31 +17,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Connect wallet
+        // Always require fresh connection
         try {
             if (!window.ethereum) {
                 alert("Please install MetaMask or another wallet!");
                 return;
             }
 
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // Force fresh request every time
+            const accounts = await window.ethereum.request({ 
+                method: 'eth_requestAccounts' 
+            });
+
             currentAddress = accounts[0];
 
-            // Save to sessionStorage (clears when tab is closed)
-            sessionStorage.setItem('connectedWallet', currentAddress);
-
             console.log('✅ Wallet connected:', currentAddress);
-            updateButtonUI();
+
+            // Update button
+            loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            alert("Failed to connect wallet.");
+            if (error.code === 4001) {
+                alert("You rejected the connection.");
+            } else {
+                alert("Failed to connect wallet.");
+            }
         }
     });
-
-    function updateButtonUI() {
-        loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
-    }
 
     function toggleDropdown() {
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function logoutWallet() {
         currentAddress = null;
-        sessionStorage.removeItem('connectedWallet');
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
+        console.log('✅ Wallet logged out');
     }
 
     // ==================== LEGAL MODAL ====================
