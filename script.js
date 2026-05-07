@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('✅ Wallet connected:', currentAddress);
 
             loginBtn.innerHTML = `
-                <div style="display:flex; align-items:center; gap:2px; cursor:pointer; padding:4px 12px; border-radius:10px;">
-                    ${currentAddress.slice(0,6)}...${currentAddress.slice(-4)}
+                <div style="display:flex; align-items:center; gap:2px; cursor:pointer; padding:0.8rem 1.8rem; border-radius:10px;">
+                    ${currentAddress.slice(0,4)}...${currentAddress.slice(-4)}
                 </div>
             `;
 
