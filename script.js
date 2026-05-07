@@ -1,6 +1,6 @@
 // ====================== SUPABASE CONFIG ======================
 const SUPABASE_URL = 'https://rcuxlkyqnwouobitojso.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY HERE
+const SUPABASE_ANON_KEY = 'eyJ...';   // ← YOUR REAL ANON KEY
 // ============================================================
 
 let supabaseClient = null;
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const supabase = initSupabase();
 
-    // Try to get session
+    // Check session
     const { data: { session } } = await supabase.auth.getSession();
     updateLoginUI(session);
 
@@ -31,18 +31,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (loginBtn) {
         loginBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            const { data: { session } } = await supabase.auth.getSession();
-
-            if (session) {
-                await supabase.auth.signOut();
-            } else {
-                await supabase.auth.signInWithOAuth({
-                    provider: 'discord',
-                    options: {
-                        redirectTo: 'https://cartoons-orpin.vercel.app/api/auth/callback'
-                    }
-                });
-            }
+            await supabase.auth.signInWithOAuth({
+                provider: 'discord',
+                options: {
+                    redirectTo: 'https://cartoons-orpin.vercel.app/api/auth/callback'
+                }
+            });
         });
     }
 
