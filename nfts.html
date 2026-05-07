@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - cartoons.io</title>
   <link rel="stylesheet" href="https://use.typekit.net/eyd0ghc.css">
-
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
 </head>
 
 <!-- Legal Modal / Chatbox -->
@@ -30,14 +30,27 @@
       <img src="assets/wordmark.png" alt="Cartoons Wordmark" class="logo">
     </a>
 
-    <!-- Navigation -->
-    <nav>
-    <a href="index.html">about</a>  
+<!-- Navigation -->
+<nav style="display:flex; align-items:center; gap: 2rem;">
+    <a href="community.html">games</a>
     <a href="https://opensea.io/collection/cartoonsnft/explore" target="_blank" rel="noopener noreferrer">nfts</a>
-    <a href="community.html">community</a>
-    <a href="#" class="cta-button">login</a>
-    </nav>
+    <a href="community.html">docs</a>
+    
+    <!-- Social Icons - placed to the right of the menu -->
+    <div class="social-links" style="display:flex; gap:12px; align-items:center;">
+        <a href="https://x.com/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <img src="assets/icons/xBL.png" alt="X icon" class="social-icon">
+        </a>
+        <a href="https://discord.gg/Xs4Cnn3bAp" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <img src="assets/icons/discordBL.png" alt="Discord icon" class="social-icon">
+        </a>
+    </div>
+</nav>
   </div>
+
+<!-- Centered 2px line with 20px side margins -->
+<div class="divider-line"></div>
+
 </header>
 
 <main>
