@@ -1,12 +1,12 @@
-// ====================== WALLET CONNECT (Fresh Every Time) ======================
+// ====================== WALLET CONNECT (Multi-Wallet Support) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io loaded - Fresh Wallet Mode', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Force fresh state on every page load
+    // Always start fresh
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -18,34 +18,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            if (!window.ethereum) {
-                alert("Please install MetaMask or another wallet!");
+            let accounts;
+
+            // Try Phantom first (Solana)
+            if (window.solana && window.solana.isPhantom) {
+                const resp = await window.solana.connect();
+                currentAddress = resp.publicKey.toString();
+                console.log('✅ Phantom connected:', currentAddress);
+            } 
+            // Then try MetaMask / other EVM wallets
+            else if (window.ethereum) {
+                await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
+                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                currentAddress = accounts[0];
+                console.log('✅ MetaMask/EVM connected:', currentAddress);
+            } 
+            else {
+                alert("Please install MetaMask or Phantom wallet!");
                 return;
             }
-
-            // Force fresh permission request
-            await window.ethereum.request({
-                method: 'wallet_requestPermissions',
-                params: [{ eth_accounts: {} }]
-            });
-
-            const accounts = await window.ethereum.request({ 
-                method: 'eth_requestAccounts' 
-            });
-
-            currentAddress = accounts[0];
-
-            console.log('✅ Fresh handshake successful:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            if (error.code === 4001) {
-                alert("Connection rejected.");
-            } else {
-                alert("Failed to connect wallet.");
-            }
+            alert("Failed to connect wallet. Please try again.");
         }
     });
 
