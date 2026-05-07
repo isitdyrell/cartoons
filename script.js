@@ -1,12 +1,12 @@
-// ====================== WALLET CONNECT (Aggressive Fresh Handshake) ======================
+// ====================== WALLET CONNECT (Clean & Secure) ======================
 let currentAddress = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Cartoons.io - Aggressive Fresh Handshake Mode', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
 
     const loginBtn = document.getElementById('dynamicLoginBtn');
 
-    // Force fresh state
+    // Always start with clean state
     currentAddress = null;
     loginBtn.textContent = 'login';
 
@@ -23,25 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Strongest possible fresh request
+            // Fresh handshake every time user clicks "login"
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
             });
 
-            const accounts = await window.ethereum.request({ 
-                method: 'eth_requestAccounts' 
-            });
-
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             currentAddress = accounts[0];
 
-            console.log('✅ Fresh handshake:', currentAddress);
+            console.log('✅ Wallet connected:', currentAddress);
 
             loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
 
         } catch (error) {
             console.error(error);
-            alert("Failed to connect wallet. Please approve the connection popup.");
+            alert("Connection cancelled or failed.");
         }
     });
 
@@ -60,18 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopImmediatePropagation();
             logoutWallet();
         });
-
-        setTimeout(() => {
-            document.addEventListener('click', function handler(ev) {
-                if (!loginBtn.contains(ev.target)) {
-                    dropdown.remove();
-                    document.removeEventListener('click', handler);
-                }
-            });
-        }, 10);
     }
 
     function logoutWallet() {
@@ -79,10 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.textContent = 'login';
         loginBtn.style.position = '';
         document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-        console.log('✅ Wallet fully logged out');
+        console.log('✅ Wallet logged out');
     }
 
-    // ==================== LEGAL MODAL ====================
+    // ==================== LEGAL MODAL + FLOOR PRICE ====================
+    // (your existing code - unchanged)
     const modal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
@@ -114,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
