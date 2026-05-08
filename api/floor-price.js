@@ -5,30 +5,28 @@ export default async function handler(req, res) {
     const ethData = await ethRes.json();
     const ethUsd = ethData.ethereum?.usd || 3400;
 
-    // Scrape OpenSea page
-    const proxy = 'https://api.allorigins.win/raw?url=';
-    const url = 'https://opensea.io/collection/cartoonsnft';
-    const pageRes = await fetch(proxy + encodeURIComponent(url));
-    const html = await pageRes.text();
+    // Direct scrape using a better proxy
+    const response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://opensea.io/collection/cartoonsnft'));
+    const html = await response.text();
 
-    // Try to extract floor price
-    const ethMatch = html.match(/(\d+\.?\d*)\s*ETH/i);
+    // Better regex to find floor price
+    const match = html.match(/(\d+\.?\d*)\s*ETH/i);
+    
     let floorEth = 0;
-
-    if (ethMatch && ethMatch[1]) {
-      floorEth = parseFloat(ethMatch[1]);
+    if (match && match[1]) {
+      floorEth = parseFloat(match[1]);
     }
 
     const floorUsd = Math.round(floorEth * ethUsd);
 
-    res.status(200).json({
+    res.json({
       floorEth: floorEth.toFixed(4),
       floorUsd: floorUsd
     });
 
   } catch (err) {
     console.error(err);
-    res.status(200).json({
+    res.json({
       floorEth: '—',
       floorUsd: '—'
     });
