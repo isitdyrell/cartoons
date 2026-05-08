@@ -109,21 +109,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==================== FLOOR PRICE ====================
+        // ==================== FLOOR PRICE (using OpenSea API) ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
             try {
                 floorItem.textContent = 'Floor: Loading...';
-                const ethRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-                const ethData = await ethRes.json();
-                const ethUsd = ethData.ethereum?.usd || 3400;
-                floorItem.textContent = `Floor: Check OpenSea ($${ethUsd})`;
+
+                const response = await fetch('/api/floor-price');
+                const data = await response.json();
+
+                if (data.floorEth && data.floorEth !== '—') {
+                    floorItem.textContent = `Floor: ${data.floorEth} ETH ($${data.floorUsd})`;
+                } else {
+                    floorItem.textContent = 'Floor: —';
+                }
             } catch (err) {
+                console.error(err);
                 floorItem.textContent = 'Floor: —';
             }
         }
+
         updateFloorPrice();
-        setInterval(updateFloorPrice, 300000);
+        setInterval(updateFloorPrice, 300000); // every 5 minutes
     }
 });
