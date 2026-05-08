@@ -77,8 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('✅ Wallet fully logged out');
     }
 
-    // ==================== LEGAL MODAL + FLOOR PRICE ====================
-    // (keep your existing code here)
+    // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
@@ -110,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
