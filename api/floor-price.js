@@ -5,16 +5,18 @@ export default async function handler(req, res) {
     const ethData = await ethRes.json();
     const ethUsd = ethData.ethereum?.usd || 3400;
 
-    // Direct scrape using a better proxy
-    const response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://opensea.io/collection/cartoonsnft'));
-    const html = await response.text();
+    // Get OpenSea page
+    const proxy = 'https://api.allorigins.win/raw?url=';
+    const url = 'https://opensea.io/collection/cartoonsnft';
+    const pageRes = await fetch(proxy + encodeURIComponent(url));
+    const html = await pageRes.text();
 
-    // Better regex to find floor price
-    const match = html.match(/(\d+\.?\d*)\s*ETH/i);
-    
+    // Improved regex to find floor price
     let floorEth = 0;
-    if (match && match[1]) {
-      floorEth = parseFloat(match[1]);
+    const floorMatch = html.match(/(\d+\.?\d*)\s*ETH/i);
+    
+    if (floorMatch && floorMatch[1]) {
+      floorEth = parseFloat(floorMatch[1]);
     }
 
     const floorUsd = Math.round(floorEth * ethUsd);
