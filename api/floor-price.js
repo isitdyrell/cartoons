@@ -1,26 +1,23 @@
 export default async function handler(req, res) {
-  const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
-
-  if (!OPENSEA_API_KEY) {
-    return res.status(500).json({ error: 'OpenSea API key not configured' });
-  }
-
   try {
-    // Get collection stats from OpenSea
-    const statsRes = await fetch('https://api.opensea.io/api/v2/collection/cartoonsnft/stats', {
-      headers: {
-        'X-API-KEY': OPENSEA_API_KEY,
-      }
-    });
-
-    const stats = await statsRes.json();
-
-    const floorEth = stats.stats?.floor_price || 0;
-
     // Get current ETH price
     const ethRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
     const ethData = await ethRes.json();
     const ethUsd = ethData.ethereum?.usd || 3400;
+
+    // Scrape OpenSea page
+    const proxy = 'https://api.allorigins.win/raw?url=';
+    const url = 'https://opensea.io/collection/cartoonsnft';
+    const pageRes = await fetch(proxy + encodeURIComponent(url));
+    const html = await pageRes.text();
+
+    // Try to extract floor price
+    const ethMatch = html.match(/(\d+\.?\d*)\s*ETH/i);
+    let floorEth = 0;
+
+    if (ethMatch && ethMatch[1]) {
+      floorEth = parseFloat(ethMatch[1]);
+    }
 
     const floorUsd = Math.round(floorEth * ethUsd);
 
