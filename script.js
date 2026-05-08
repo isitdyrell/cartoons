@@ -1,81 +1,5 @@
-// ====================== WALLET CONNECT (Clean Session + Fresh Handshake) ======================
-let currentAddress = null;
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Cartoons.io loaded', 'color:#2b2263; font-weight:bold');
-
-    const loginBtn = document.getElementById('dynamicLoginBtn');
-
-    // Load from sessionStorage (persists during active tab use)
-    const saved = sessionStorage.getItem('connectedWallet');
-    if (saved) {
-        currentAddress = saved;
-        loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
-    } else {
-        loginBtn.textContent = 'login';
-    }
-
-    loginBtn.addEventListener('click', async (e) => {
-        if (currentAddress) {
-            e.preventDefault();
-            toggleDropdown();
-            return;
-        }
-
-        // Always force a fresh handshake when clicking login
-        try {
-            if (!window.ethereum) {
-                alert("Please install MetaMask or Phantom (Ethereum)!");
-                return;
-            }
-
-            // Force permission prompt
-            await window.ethereum.request({
-                method: 'wallet_requestPermissions',
-                params: [{ eth_accounts: {} }]
-            });
-
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            currentAddress = accounts[0];
-
-            // Save to sessionStorage (clears when tab is closed)
-            sessionStorage.setItem('connectedWallet', currentAddress);
-
-            loginBtn.innerHTML = `0x${currentAddress.slice(2,6)}...${currentAddress.slice(-4)}`;
-
-        } catch (error) {
-            console.error(error);
-            alert("Failed to connect wallet.");
-        }
-    });
-
-    function toggleDropdown() {
-        document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-
-        const dropdown = document.createElement('div');
-        dropdown.className = 'wallet-dropdown';
-        dropdown.innerHTML = `
-            <a href="#" class="dropdown-item">Profile</a>
-            <a href="#" id="logout-btn" class="dropdown-item">Logout</a>
-        `;
-
-        loginBtn.style.position = 'relative';
-        loginBtn.appendChild(dropdown);
-
-        document.getElementById('logout-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            logoutWallet();
-        });
-    }
-
-    function logoutWallet() {
-        currentAddress = null;
-        sessionStorage.removeItem('connectedWallet');
-        loginBtn.textContent = 'login';
-        loginBtn.style.position = '';
-        document.querySelectorAll('.wallet-dropdown').forEach(d => d.remove());
-        console.log('✅ Wallet fully logged out');
-    }
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
@@ -109,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-        // ==================== FLOOR PRICE (using OpenSea API) ====================
+    // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
@@ -125,12 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     floorItem.textContent = 'Floor: —';
                 }
             } catch (err) {
-                console.error(err);
+                console.error('Floor price error:', err);
                 floorItem.textContent = 'Floor: —';
             }
         }
 
         updateFloorPrice();
-        setInterval(updateFloorPrice, 300000); // every 5 minutes
+        setInterval(updateFloorPrice, 300000);
     }
 });
