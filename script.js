@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const nfts = data.assets || [];
 
             if (nfts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">No NFTs loaded. Try refreshing.</p>';
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">Could not load NFTs. Please try again later.</p>';
                 return;
             }
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             console.error(err);
-            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs. Please try again later.</p>';
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs from OpenSea.</p>';
         }
     }
 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'nft-card';
             card.innerHTML = `
                 <img src="${nft.image_url || nft.image_preview_url || 'https://via.placeholder.com/300x300/2b2263/ffffff?text=No+Image'}" 
-                     alt="${nft.name || 'Cartoons NFT'}">
+                     alt="${nft.name}">
             `;
             card.onclick = () => openNftModal(nft);
             grid.appendChild(card);
@@ -45,20 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openNftModal(nft) {
         const modal = document.createElement('div');
-        modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;`;
+        modal.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:2000;display:flex;align-items:center;justify-content:center;`;
         modal.innerHTML = `
-            <div style="background:white; max-width:720px; width:90%; border-radius:16px; overflow:hidden; position:relative;">
-                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute; top:15px; right:15px; font-size:32px; background:none; border:none; cursor:pointer; z-index:10; color:#2b2263;">×</button>
-                <img src="${nft.image_url || nft.image_preview_url}" style="width:100%; display:block;" alt="${nft.name}">
+            <div style="background:white;max-width:720px;width:90%;border-radius:16px;overflow:hidden;position:relative;">
+                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;z-index:10;color:#2b2263;">×</button>
+                <img src="${nft.image_url || nft.image_preview_url}" style="width:100%;display:block;" alt="${nft.name}">
                 <div style="padding:25px;">
                     <h3 style="margin:0 0 12px 0;">${nft.name || 'Cartoons NFT'}</h3>
-                    <a href="${nft.permalink || 'https://opensea.io/collection/cartoonsnft'}" 
-                       target="_blank" 
-                       style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
-                    <button onclick="downloadImage('${nft.image_url || nft.image_preview_url}', '${nft.name}')" 
-                            style="margin-left:15px; padding:10px 20px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">
-                        Download Image
-                    </button>
+                    <a href="${nft.permalink || 'https://opensea.io/collection/cartoonsnft'}" target="_blank" style="color:#2b2263;text-decoration:underline;">View on OpenSea →</a>
+                    <button onclick="downloadImage('${nft.image_url || nft.image_preview_url}', '${nft.name}')" style="margin-left:15px;padding:10px 20px;background:#2b2263;color:white;border:none;border-radius:8px;cursor:pointer;">Download Image</button>
                 </div>
             </div>
         `;
@@ -69,20 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = document.createElement('a');
         a.href = url;
         a.download = name ? `${name}.png` : 'cartoons-nft.png';
-        document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
     };
 
     // Load the gallery
     loadNfts();
 
-    // Filter buttons
+    // Filter buttons (basic for now)
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // TODO: Add trait filtering later
         });
     });
 
