@@ -1,15 +1,20 @@
 export default async function handler(req, res) {
   try {
-    // Get current ETH price
+    // Get ETH price
     const ethRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
     const ethData = await ethRes.json();
     const ethUsd = ethData.ethereum?.usd || 3400;
 
-    // Use a more reliable way to get OpenSea floor price
-    const response = await fetch('https://api.opensea.io/api/v1/collection/cartoonsnft/stats');
-    const data = await response.json();
+    // Try the v1 endpoint
+    const statsRes = await fetch('https://api.opensea.io/api/v1/collection/cartoonsnft/stats');
+    const statsData = await statsRes.json();
 
-    const floorEth = data.stats?.floor_price || 0;
+    let floorEth = 0;
+
+    if (statsData.stats && statsData.stats.floor_price) {
+      floorEth = statsData.stats.floor_price;
+    }
+
     const floorUsd = Math.round(floorEth * ethUsd);
 
     res.json({
