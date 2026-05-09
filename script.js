@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
+    // ==================== NFT GALLERY ====================
     const grid = document.getElementById('nft-grid');
     
     if (!grid) {
@@ -8,12 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Sample data - we'll replace with real ones later
+    // Sample data (placeholders for now)
     const nftData = [
         { id: 1, name: "Cartoons #1", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=1", traits: [] },
         { id: 2, name: "Cartoons #42", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=42", traits: ["1of1"] },
         { id: 3, name: "Cartoons #777", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=777", traits: ["bat"] },
-        // Add more here later
+        { id: 4, name: "Cartoons #1234", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=1234", traits: [] },
+        { id: 5, name: "Cartoons #5555", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=5555", traits: ["1of1"] }
     ];
 
     function renderGallery(data) {
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'nft-card';
             card.innerHTML = `<img src="${token.image}" alt="${token.name}">`;
-            card.onclick = () => alert(`Clicked ${token.name} - Modal coming soon`);
+            card.onclick = () => alert(`Clicked ${token.name} — modal coming soon`);
             grid.appendChild(card);
         });
     }
@@ -46,8 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    console.log('✅ Gallery should now be visible');
-});
+    console.log('✅ Gallery should now be visible with 5 placeholder cards');
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
@@ -87,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         async function updateFloorPrice() {
             try {
                 floorItem.textContent = 'Floor: Loading...';
-
                 const response = await fetch('/api/floor-price');
                 const data = await response.json();
 
@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 floorItem.textContent = 'Floor: —';
             }
         }
-
         updateFloorPrice();
         setInterval(updateFloorPrice, 300000);
     }
