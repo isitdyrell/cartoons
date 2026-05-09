@@ -782,3 +782,79 @@ footer p {
     color: #b9b7ff;
     background: transparent;
 }
+
+/* ==========================================================================
+   NFT GALLERY
+   ========================================================================== */
+
+.nft-gallery-section {
+  padding: 2rem 2rem;
+  background: #ffffff;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gallery-filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: 2px solid #2b2263;
+  background: white;
+  color: #2b2263;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #2b2263;
+  color: white;
+}
+
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 3rem;
+}
+
+.nft-card {
+  border: 1px solid #2b2263;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.nft-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(43, 34, 99, 0.15);
+}
+
+.nft-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
