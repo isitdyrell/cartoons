@@ -1,73 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
-    // ==================== NFT GALLERY DATA ====================
-    const nftData = [
-        { id: 1, name: "Cartoons #1", image: "https://openseauserdata.com/files/...1.png", traits: ["1of1"] },
-        { id: 2, name: "Cartoons #42", image: "https://openseauserdata.com/files/...42.png", traits: ["bat"] },
-        // Add more tokens here (I'll help you expand this list)
-        // For now, we'll use placeholders. You can replace with real OpenSea image URLs.
-    ];
-
     const grid = document.getElementById('nft-grid');
-    const modal = document.getElementById('nft-modal') || createModal();
-
-    function createModal() {
-        const m = document.createElement('div');
-        m.id = 'nft-modal';
-        m.style.cssText = `
-            display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center;
-        `;
-        m.innerHTML = `
-            <div style="background:white; max-width:800px; width:90%; border-radius:15px; overflow:hidden; position:relative;">
-                <button id="modal-close" style="position:absolute; top:15px; right:15px; font-size:28px; background:none; border:none; cursor:pointer; z-index:10;">×</button>
-                <img id="modal-image" style="width:100%; display:block;">
-                <div style="padding:20px;">
-                    <h3 id="modal-name" style="margin:0 0 10px 0;"></h3>
-                    <a id="modal-opensea" href="#" target="_blank" style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
-                    <button id="modal-download" style="margin-left:15px; padding:8px 16px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">Download Image</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(m);
-        return m;
+    
+    if (!grid) {
+        console.error("NFT Grid not found! Check if #nft-grid exists in HTML.");
+        return;
     }
 
-    // Render gallery
-    function renderGallery(filteredData) {
+    // Sample data - we'll replace with real ones later
+    const nftData = [
+        { id: 1, name: "Cartoons #1", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=1", traits: [] },
+        { id: 2, name: "Cartoons #42", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=42", traits: ["1of1"] },
+        { id: 3, name: "Cartoons #777", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=777", traits: ["bat"] },
+        // Add more here later
+    ];
+
+    function renderGallery(data) {
         grid.innerHTML = '';
-        filteredData.forEach(token => {
+        data.forEach(token => {
             const card = document.createElement('div');
             card.className = 'nft-card';
             card.innerHTML = `<img src="${token.image}" alt="${token.name}">`;
-            card.onclick = () => openModal(token);
+            card.onclick = () => alert(`Clicked ${token.name} - Modal coming soon`);
             grid.appendChild(card);
         });
     }
 
-    function openModal(token) {
-        document.getElementById('modal-image').src = token.image;
-        document.getElementById('modal-name').textContent = token.name;
-        document.getElementById('modal-opensea').href = `https://opensea.io/assets/ethereum/0x.../${token.id}`; // Update contract address
-        document.getElementById('nft-modal').style.display = 'flex';
+    // Initial render
+    renderGallery(nftData);
 
-        document.getElementById('modal-download').onclick = () => {
-            const a = document.createElement('a');
-            a.href = token.image;
-            a.download = `${token.name}.png`;
-            a.click();
-        };
-    }
-
-    // Close modal
-    document.addEventListener('click', e => {
-        if (e.target.id === 'modal-close' || e.target.id === 'nft-modal') {
-            document.getElementById('nft-modal').style.display = 'none';
-        }
-    });
-
-    // Filters
+    // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -83,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial render
-    renderGallery(nftData);
+    console.log('✅ Gallery should now be visible');
+});
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
