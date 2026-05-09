@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sample data (placeholders for now)
     const nftData = [
-        { id: 1, name: "Cartoons #1", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=1", traits: [] },
-        { id: 2, name: "Cartoons #42", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=42", traits: ["1of1"] },
-        { id: 3, name: "Cartoons #777", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=777", traits: ["bat"] },
-        { id: 4, name: "Cartoons #1234", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=1234", traits: [] },
-        { id: 5, name: "Cartoons #5555", image: "https://via.placeholder.com/300x300/2b2263/ffffff?text=5555", traits: ["1of1"] }
-    ];
+    { id: 1, name: "Cartoons #1", image: "https://picsum.photos/id/1015/300/300", traits: [] },
+    { id: 2, name: "Cartoons #42", image: "https://picsum.photos/id/237/300/300", traits: ["1of1"] },
+    { id: 3, name: "Cartoons #777", image: "https://picsum.photos/id/180/300/300", traits: ["bat"] },
+    { id: 4, name: "Cartoons #1234", image: "https://picsum.photos/id/201/300/300", traits: [] },
+    { id: 5, name: "Cartoons #5555", image: "https://picsum.photos/id/251/300/300", traits: ["1of1"] }
+];
 
     function renderGallery(data) {
         grid.innerHTML = '';
