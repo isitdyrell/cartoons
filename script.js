@@ -1,26 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
-    // ==================== NFT GALLERY ====================
     const grid = document.getElementById('nft-grid');
-    
     if (!grid) {
-        console.error("NFT Grid not found! Check if #nft-grid exists in HTML.");
+        console.error("NFT Grid not found!");
         return;
     }
 
-    // Fetch real NFTs from OpenSea
     async function loadNfts() {
         try {
             grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; padding: 60px 20px;">Loading 50 random Cartoons NFTs...</p>';
 
-            const response = await fetch('https://api.opensea.io/api/v2/collection/cartoonsnft/nfts?limit=50');
+            // Using public v1 endpoint (no API key required)
+            const response = await fetch('https://api.opensea.io/api/v1/assets?collection=cartoonsnft&limit=50&order_direction=desc');
             const data = await response.json();
 
-            const nfts = data.nfts || [];
+            const nfts = data.assets || [];
 
             if (nfts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">No NFTs loaded. Try refreshing.</p>';
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">Could not load NFTs right now.</p>';
                 return;
             }
 
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             console.error(err);
-            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs from OpenSea.</p>';
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load from OpenSea. Please try again later.</p>';
         }
     }
 
@@ -38,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'nft-card';
             card.innerHTML = `
-                <img src="${nft.image_url || 'https://via.placeholder.com/300x300/2b2263/ffffff?text=No+Image'}" 
+                <img src="${nft.image_url || nft.image_preview_url || 'https://via.placeholder.com/300x300/2b2263/ffffff?text=No+Image'}" 
                      alt="${nft.name || 'Cartoons NFT'}">
             `;
             card.onclick = () => openNftModal(nft);
@@ -51,21 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;`;
         modal.innerHTML = `
             <div style="background:white; max-width:720px; width:90%; border-radius:16px; overflow:hidden; position:relative;">
-                <button onclick="this.closest('.nft-modal').remove()" style="position:absolute; top:15px; right:15px; font-size:32px; background:none; border:none; cursor:pointer; z-index:10; color:#2b2263;">×</button>
-                <img src="${nft.image_url}" style="width:100%; display:block;" alt="${nft.name}">
+                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute; top:15px; right:15px; font-size:32px; background:none; border:none; cursor:pointer; z-index:10; color:#2b2263;">×</button>
+                <img src="${nft.image_url || nft.image_preview_url}" style="width:100%; display:block;" alt="${nft.name}">
                 <div style="padding:25px;">
                     <h3 style="margin:0 0 12px 0;">${nft.name || 'Cartoons NFT'}</h3>
-                    <a href="${nft.opensea_url || 'https://opensea.io/collection/cartoonsnft'}" 
+                    <a href="${nft.permalink || 'https://opensea.io/collection/cartoonsnft'}" 
                        target="_blank" 
                        style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
-                    <button onclick="downloadImage('${nft.image_url}', '${nft.name}')" 
+                    <button onclick="downloadImage('${nft.image_url || nft.image_preview_url}', '${nft.name}')" 
                             style="margin-left:15px; padding:10px 20px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">
                         Download Image
                     </button>
                 </div>
             </div>
         `;
-        modal.className = 'nft-modal';
         document.body.appendChild(modal);
     }
 
@@ -81,12 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load the gallery
     loadNfts();
 
-    // Filter buttons (basic for now)
+    // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // TODO: Add real trait filtering later
+            // TODO: Add trait filtering later
         });
     });
 
