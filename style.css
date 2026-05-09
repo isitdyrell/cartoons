@@ -840,6 +840,7 @@ footer p {
   background: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  aspect-ratio: 1 / 1;           /* Makes cards square */
 }
 
 .nft-card:hover {
