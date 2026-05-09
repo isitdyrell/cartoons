@@ -11,14 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; padding: 60px 20px;">Loading 50 random Cartoons NFTs...</p>';
 
-            // Using public v1 endpoint (no API key required)
-            const response = await fetch('https://api.opensea.io/api/v1/assets?collection=cartoonsnft&limit=50&order_direction=desc');
+            const response = await fetch('/api/nfts');
             const data = await response.json();
 
             const nfts = data.assets || [];
 
             if (nfts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">Could not load NFTs right now.</p>';
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">No NFTs loaded. Try refreshing.</p>';
                 return;
             }
 
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             console.error(err);
-            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load from OpenSea. Please try again later.</p>';
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs. Please try again later.</p>';
         }
     }
 
