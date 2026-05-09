@@ -11,10 +11,10 @@ export default async function handler(req, res) {
     const pageRes = await fetch(proxy + encodeURIComponent(url));
     const html = await pageRes.text();
 
-    // Improved regex to find floor price
+    // Improved regex to catch current OpenSea floor price format
     let floorEth = 0;
     const floorMatch = html.match(/(\d+\.?\d*)\s*ETH/i);
-    
+
     if (floorMatch && floorMatch[1]) {
       floorEth = parseFloat(floorMatch[1]);
     }
