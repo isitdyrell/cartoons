@@ -1,54 +1,84 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
-    // ==================== NFT GALLERY ====================
     const grid = document.getElementById('nft-grid');
-    
     if (!grid) {
-        console.error("NFT Grid not found! Check if #nft-grid exists in HTML.");
+        console.error("NFT Grid not found!");
         return;
     }
 
-    // Sample data (placeholders for now)
-    const nftData = [
-    { id: 1, name: "Cartoons #1", image: "https://picsum.photos/id/1015/300/300", traits: [] },
-    { id: 2, name: "Cartoons #42", image: "https://picsum.photos/id/237/300/300", traits: ["1of1"] },
-    { id: 3, name: "Cartoons #777", image: "https://picsum.photos/id/180/300/300", traits: ["bat"] },
-    { id: 4, name: "Cartoons #1234", image: "https://picsum.photos/id/201/300/300", traits: [] },
-    { id: 5, name: "Cartoons #5555", image: "https://picsum.photos/id/251/300/300", traits: ["1of1"] }
-];
+    let allNfts = [];
 
-    function renderGallery(data) {
+    // Fetch real NFTs from OpenSea
+    async function loadNfts() {
+        try {
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; padding: 40px;">Loading collection...</p>';
+
+            const response = await fetch('https://api.opensea.io/api/v2/collection/cartoonsnft/nfts?limit=50');
+            const data = await response.json();
+
+            allNfts = data.nfts || [];
+
+            renderGallery(allNfts);
+
+        } catch (err) {
+            console.error(err);
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs. Please try again later.</p>';
+        }
+    }
+
+    function renderGallery(nfts) {
         grid.innerHTML = '';
-        data.forEach(token => {
+        nfts.forEach(nft => {
             const card = document.createElement('div');
             card.className = 'nft-card';
-            card.innerHTML = `<img src="${token.image}" alt="${token.name}">`;
-            card.onclick = () => alert(`Clicked ${token.name} — modal coming soon`);
+            card.innerHTML = `
+                <img src="${nft.image_url || 'https://via.placeholder.com/300x300/2b2263/ffffff?text=No+Image'}" 
+                     alt="${nft.name}">
+            `;
+            card.onclick = () => openNftModal(nft);
             grid.appendChild(card);
         });
     }
 
-    // Initial render
-    renderGallery(nftData);
+    function openNftModal(nft) {
+        const modalHtml = `
+            <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;">
+                <div style="background:white; max-width:700px; width:90%; border-radius:15px; overflow:hidden;">
+                    <button onclick="this.parentElement.parentElement.remove()" style="position:absolute; top:15px; right:15px; font-size:30px; background:none; border:none; cursor:pointer;">×</button>
+                    <img src="${nft.image_url}" style="width:100%; display:block;" alt="${nft.name}">
+                    <div style="padding:20px;">
+                        <h3>${nft.name}</h3>
+                        <a href="${nft.opensea_url || '#'}" target="_blank" style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
+                        <button onclick="downloadImage('${nft.image_url}', '${nft.name}')" style="margin-left:15px; padding:10px 20px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">Download Image</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        const modal = document.createElement('div');
+        modal.innerHTML = modalHtml;
+        document.body.appendChild(modal);
+    }
 
-    // Filter buttons
+    window.downloadImage = (url, name) => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${name}.png`;
+        a.click();
+    };
+
+    // Load NFTs on page load
+    loadNfts();
+
+    // Filter buttons (basic for now)
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            const filter = btn.dataset.filter;
-            let filtered = nftData;
-
-            if (filter === '1of1') filtered = nftData.filter(t => t.traits.includes('1of1'));
-            if (filter === 'bat') filtered = nftData.filter(t => t.traits.includes('bat'));
-
-            renderGallery(filtered);
+            // TODO: Add trait filtering later
         });
     });
-
-    console.log('✅ Gallery should now be visible with 5 placeholder cards');
+});
 
     // ==================== LEGAL MODAL ====================
     const modal = document.getElementById('legalModal');
