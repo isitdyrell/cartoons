@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Cartoon 7141", filename: "Cartoon 7141.jpg", type: "image" },
     ]; // Add items here later in the same format    
 
-            function createMediaElement(item) {
-        const fullPath = `assets/1of1/${item.filename}`;
+                function createMediaElement(item, folder = "1of1") {
+        const fullPath = `assets/${folder}/${item.filename}`;
         
         if (item.filename.toLowerCase().endsWith('.mp4')) {
             return `
@@ -61,21 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     loop 
                     muted 
                     playsinline 
-                    style="width:100%; height:100%; object-fit:cover; object-position:center; background:#000;"
-                    onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\"width:100%;height:100%;background:#111;color:white;display:flex;align-items:center;justify-content:center;font-size:0.9rem;\">Video unavailable</div>';">
+                    style="width:100%; height:100%; object-fit:cover; object-position:center; background:#000;">
                 </video>`;
         } else {
             return `<img src="${fullPath}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">`;
         }
     }
 
-    function renderGallery(items) {
+    function renderGallery(items, folder = "1of1") {
         grid.innerHTML = '';
         items.forEach(item => {
             const card = document.createElement('div');
             card.className = 'nft-card';
-            card.innerHTML = createMediaElement(item);
-            // No onclick - hover effect only
+            card.innerHTML = createMediaElement(item, folder);
             grid.appendChild(card);
         });
     }
@@ -116,25 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Default to 1/1s
     renderGallery(oneOfOnes);
 
-            // Filter buttons
+                // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             if (btn.dataset.filter === "1of1") {
-                renderGallery(oneOfOnes);
+                renderGallery(oneOfOnes, "1of1");
             } 
             else if (btn.dataset.filter === "curated") {
                 if (curated.length > 0) {
-                    renderGallery(curated);
+                    renderGallery(curated, "curated");
                 } else {
                     grid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; padding: 80px 20px; font-size:1.2rem;">CURATED coming soon...</p>`;
                 }
             } 
             else if (btn.dataset.filter === "favorites") {
                 if (favorites.length > 0) {
-                    renderGallery(favorites);
+                    renderGallery(favorites, "favorites");   // ← looks in assets/favorites/
                 } else {
                     grid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; padding: 80px 20px; font-size:1.2rem;">FAVORITES coming soon...</p>`;
                 }
