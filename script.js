@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
+    console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:normal');
 
     const grid = document.getElementById('nft-grid');
     if (!grid) return;
