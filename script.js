@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Cartoon 7463", filename: "corai.jpg", type: "image" },
         { name: "Cartoon 7444", filename: "franky.gif", type: "image" },
         { name: "Cartoon 6893", filename: "0fish0.jpg", type: "image" },
-        { name: "Cartoon 2045", filename: "petio.mp4", type: "video" },
+        { name: "Cartoon 2045", filename: "petio.gif", type: "image" },
         { name: "Cartoon 4399", filename: "Arbo.png", type: "image" },
         { name: "Cartoon 4875", filename: "Agirlhasnoname.jpg", type: "image" },
         { name: "Cartoon 3279", filename: "FabQuilp.jpg", type: "image" },
