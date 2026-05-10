@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Default to 1/1s
     renderGallery(oneOfOnes);
 
-    // Filter buttons
+            // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -124,11 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (btn.dataset.filter === "1of1") {
                 renderGallery(oneOfOnes);
-            } else if (btn.dataset.filter === "curated") {
+            } 
+            else if (btn.dataset.filter === "curated") {
                 if (curated.length > 0) {
                     renderGallery(curated);
                 } else {
                     grid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; padding: 80px 20px; font-size:1.2rem;">CURATED coming soon...</p>`;
+                }
+            } 
+            else if (btn.dataset.filter === "favorites") {
+                if (favorites.length > 0) {
+                    renderGallery(favorites);
+                } else {
+                    grid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; padding: 80px 20px; font-size:1.2rem;">FAVORITES coming soon...</p>`;
                 }
             }
         });
