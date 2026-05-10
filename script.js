@@ -45,6 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==================== CURATED (Coming Soon) ====================
     const curated = []; // Add items here later in the same format
 
+    // ==================== FAVORITES (Coming Soon) ====================
+    const favorites = [
+        { name: "Cartoon 7141", filename: "Cartoon 7141.jpg", type: "image" },
+    ]; // Add items here later in the same format    
+
             function createMediaElement(item) {
         const fullPath = `assets/1of1/${item.filename}`;
         
