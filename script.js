@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:normal');
+    console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
     const grid = document.getElementById('nft-grid');
     if (!grid) return;
@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Cartoon 2280", filename: "propaganda.png", type: "image" },
         { name: "Cartoon 7749", filename: "missi.jpg", type: "image" },
         { name: "Cartoon 4794", filename: "alexmdc.jpg", type: "image" },
+        { name: "Cartoon 2354", filename: "PICASSO.jpg", type: "image" },
+        { name: "Cartoon 111", filename: "Anna.jpg", type: "image" },
+        { name: "Cartoon 6286", filename: "CAPS.jpg", type: "image" },
+        { name: "Cartoon 2597", filename: "Deadformatmc.png", type: "image" },
     ];
 
     // ==================== CURATED (Coming Soon) ====================
