@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==================== CURATED (Coming Soon) ====================
     const curated = []; // Add items here later in the same format
 
-        function createMediaElement(item) {
+            function createMediaElement(item) {
         const fullPath = `assets/1of1/${item.filename}`;
         
         if (item.filename.toLowerCase().endsWith('.mp4')) {
@@ -56,7 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     loop 
                     muted 
                     playsinline 
-                    style="width:100%; height:100%; object-fit:cover; object-position:center; background:#000;">
+                    style="width:100%; height:100%; object-fit:cover; object-position:center; background:#000;"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\"width:100%;height:100%;background:#111;color:white;display:flex;align-items:center;justify-content:center;font-size:0.9rem;\">Video unavailable</div>';">
                 </video>`;
         } else {
             return `<img src="${fullPath}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">`;
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;color:#2b2263;z-index:10;">×</button>
                 
                 ${item.filename.toLowerCase().endsWith('.mp4') ? 
-    `<video src="${fullPath}" autoplay loop controls style="width:100%; display:block; background:#000;"></video>` : 
+    `<video src="${fullPath}" autoplay loop muted controls style="width:100%; display:block; background:#000;"></video>` : 
     `<img src="${fullPath}" style="width:100%; display:block;" alt="${item.name}">`}
                 
                 <div style="padding:25px;">
