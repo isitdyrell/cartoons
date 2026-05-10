@@ -4,19 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('nft-grid');
     if (!grid) return;
 
-    // List all your 1/1 files here (add them as you put them in assets/1of1)
+    // ==================== 1/1s ====================
     const oneOfOnes = [
         { name: "Cartoon 7721", filename: "DrGrinspoon.png", type: "image" },
         { name: "Cartoon 4052", filename: "VERONICA.jpg", type: "image" },
         { name: "Cartoon 1999", filename: "WILDXVIKING.jpg", type: "image" },
-        { name: "Cartoon 4007", filename: "JLEMAA.jpg", type: "image" },
+        { name: "Cartoon 4007", filename: "JLEMA.jpg", type: "image" },
         { name: "Cartoon 5984", filename: "DAN.jpg", type: "image" },
         { name: "Cartoon 3616", filename: "PAPA.jpg", type: "image" },
-        { name: "Cartoon 3233", filename: "COSO.mp4", type: "image" },
+        { name: "Cartoon 3233", filename: "COSO.mp4", type: "video" },
         { name: "Cartoon 7463", filename: "corai.jpg", type: "image" },
         { name: "Cartoon 7444", filename: "franky.gif", type: "image" },
         { name: "Cartoon 6893", filename: "0fish0.jpg", type: "image" },
-        { name: "Cartoon 2045", filename: "petio.mp4", type: "image" },
+        { name: "Cartoon 2045", filename: "petio.mp4", type: "video" },
         { name: "Cartoon 4399", filename: "Arbo.png", type: "image" },
         { name: "Cartoon 4875", filename: "Agirlhasnoname.jpg", type: "image" },
         { name: "Cartoon 3279", filename: "FabQuilp.jpg", type: "image" },
@@ -42,36 +42,54 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Cartoon 4794", filename: "alexmdc.jpg", type: "image" },
     ];
 
+    // ==================== CURATED (Coming Soon) ====================
+    const curated = []; // Add items here later in the same format
+
+        function createMediaElement(item) {
+        const fullPath = `assets/1of1/${item.filename}`;
+        
+        if (item.filename.toLowerCase().endsWith('.mp4')) {
+            return `
+                <video src="${fullPath}" 
+                       autoplay 
+                       loop 
+                       muted 
+                       playsinline 
+                       style="width:100%; height:100%; object-fit:cover;">
+                </video>`;
+        } else {
+            return `<img src="${fullPath}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">`;
+        }
+    }
+
     function renderGallery(items) {
         grid.innerHTML = '';
         items.forEach(item => {
             const card = document.createElement('div');
             card.className = 'nft-card';
-
-            const fullPath = `assets/1of1/${item.filename}`;
-
-            card.innerHTML = `
-                <img src="${fullPath}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">
-            `;
-
-            card.onclick = () => openModal(item, fullPath);
+            card.innerHTML = createMediaElement(item);
+            // No onclick - hover effect only
             grid.appendChild(card);
         });
     }
 
-    function openModal(item, imagePath) {
+    function openModal(item) {
+        const fullPath = `assets/1of1/${item.filename}`;
         const modal = document.createElement('div');
-        modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;`;
+        modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; display:flex; align-items:center; justify-content:center;`;
+        
         modal.innerHTML = `
             <div style="background:white; max-width:800px; width:90%; border-radius:16px; overflow:hidden; position:relative;">
-                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;color:#2b2263;">×</button>
+                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;color:#2b2263;z-index:10;">×</button>
                 
-                <img src="${imagePath}" style="width:100%; display:block;" alt="${item.name}">
+                ${item.type === "video" ? 
+                    `<video src="${fullPath}" autoplay loop controls style="width:100%; display:block;"></video>` : 
+                    `<img src="${fullPath}" style="width:100%; display:block;" alt="${item.name}">`}
                 
                 <div style="padding:25px;">
                     <h3 style="margin:0 0 15px 0;">${item.name}</h3>
                     <a href="#" target="_blank" style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
-                    <button onclick="downloadImage('${imagePath}', '${item.name}')" 
+                    <button onclick="downloadFile('${fullPath}', '${item.name}')" 
                             style="margin-left:15px; padding:10px 20px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">
                         Download
                     </button>
@@ -81,14 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(modal);
     }
 
-    window.downloadImage = (url, name) => {
+    window.downloadFile = (url, name) => {
         const a = document.createElement('a');
         a.href = url;
         a.download = name;
         a.click();
     };
 
-    // Initial render - show 1/1s by default
+    // Default to 1/1s
     renderGallery(oneOfOnes);
 
     // Filter buttons
@@ -96,8 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // For now we only have 1/1s, so just re-render
-            renderGallery(oneOfOnes);
+
+            if (btn.dataset.filter === "1of1") {
+                renderGallery(oneOfOnes);
+            } else if (btn.dataset.filter === "curated") {
+                if (curated.length > 0) {
+                    renderGallery(curated);
+                } else {
+                    grid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; padding: 80px 20px; font-size:1.2rem;">CURATED coming soon...</p>`;
+                }
+            }
         });
     });
 
