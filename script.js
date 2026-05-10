@@ -2,58 +2,79 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🚀 Art Page Loaded', 'color:#2b2263; font-weight:bold');
 
     const grid = document.getElementById('nft-grid');
-    if (!grid) {
-        console.error("NFT Grid not found!");
-        return;
-    }
+    if (!grid) return;
 
-    async function loadNfts() {
-        try {
-            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; padding: 60px 20px;">Loading 50 random Cartoons NFTs...</p>';
+    // List all your 1/1 files here (add them as you put them in assets/1of1)
+    const oneOfOnes = [
+        { name: "Cartoon 7721", filename: "DrGrinspoon.png", type: "image" },
+        { name: "Cartoon 4052", filename: "VERONICA.jpg", type: "image" },
+        { name: "Cartoon 1999", filename: "WILDXVIKING.jpg", type: "image" },
+        { name: "Cartoon 4007", filename: "JLEMAA.jpg", type: "image" },
+        { name: "Cartoon 5984", filename: "DAN.jpg", type: "image" },
+        { name: "Cartoon 3616", filename: "PAPA.jpg", type: "image" },
+        { name: "Cartoon 3233", filename: "COSO.mp4", type: "image" },
+        { name: "Cartoon 7463", filename: "corai.jpg", type: "image" },
+        { name: "Cartoon 7444", filename: "franky.gif", type: "image" },
+        { name: "Cartoon 6893", filename: "0fish0.jpg", type: "image" },
+        { name: "Cartoon 2045", filename: "petio.mp4", type: "image" },
+        { name: "Cartoon 4399", filename: "Arbo.png", type: "image" },
+        { name: "Cartoon 4875", filename: "Agirlhasnoname.jpg", type: "image" },
+        { name: "Cartoon 3279", filename: "FabQuilp.jpg", type: "image" },
+        { name: "Cartoon 3666", filename: "Serge.png", type: "image" },
+        { name: "Cartoon 1255", filename: "CAB.png", type: "image" },
+        { name: "Cartoon 1130", filename: "m a s.png", type: "image" },
+        { name: "Cartoon 1409", filename: "Ryhead.png", type: "image" },
+        { name: "Cartoon 55453", filename: "james mendenhall.gif", type: "image" },
+        { name: "Cartoon 5180", filename: "iwwon.png", type: "image" },
+        { name: "Cartoon 1671", filename: "Darhk.png", type: "image" },
+        { name: "Cartoon 7770", filename: "MoM.jpg", type: "image" },
+        { name: "Cartoon 4613", filename: "DUMPSTERAPE.png", type: "image" },
+        { name: "Cartoon 4101", filename: "GIO.png", type: "image" },
+        { name: "Cartoon 6735", filename: "TENEBRINI.png", type: "image" },
+        { name: "Cartoon 5039", filename: "dznts.png", type: "image" },
+        { name: "Cartoon 6744", filename: "monkeytown.png", type: "image" },
+        { name: "Cartoon 3459", filename: "FALY.png", type: "image" },
+        { name: "Cartoon 769", filename: "dyrell.gif", type: "image" },
+        { name: "Cartoon 3835", filename: "SQUATCHY.jpg", type: "image" },
+        { name: "Cartoon 1450", filename: "mechsicko.png", type: "image" },
+        { name: "Cartoon 2280", filename: "propaganda.png", type: "image" },
+        { name: "Cartoon 7749", filename: "missi.jpg", type: "image" },
+        { name: "Cartoon 4794", filename: "alexmdc.jpg", type: "image" },
+    ];
 
-            const response = await fetch('/api/nfts');
-            const data = await response.json();
-
-            const nfts = data.assets || [];
-
-            if (nfts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">Could not load NFTs. Please try again later.</p>';
-                return;
-            }
-
-            renderGallery(nfts);
-
-        } catch (err) {
-            console.error(err);
-            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center; color:red;">Failed to load NFTs from OpenSea.</p>';
-        }
-    }
-
-    function renderGallery(nfts) {
+    function renderGallery(items) {
         grid.innerHTML = '';
-        nfts.forEach(nft => {
+        items.forEach(item => {
             const card = document.createElement('div');
             card.className = 'nft-card';
+
+            const fullPath = `assets/1of1/${item.filename}`;
+
             card.innerHTML = `
-                <img src="${nft.image_url || nft.image_preview_url || 'https://via.placeholder.com/300x300/2b2263/ffffff?text=No+Image'}" 
-                     alt="${nft.name}">
+                <img src="${fullPath}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">
             `;
-            card.onclick = () => openNftModal(nft);
+
+            card.onclick = () => openModal(item, fullPath);
             grid.appendChild(card);
         });
     }
 
-    function openNftModal(nft) {
+    function openModal(item, imagePath) {
         const modal = document.createElement('div');
-        modal.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:2000;display:flex;align-items:center;justify-content:center;`;
+        modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center;`;
         modal.innerHTML = `
-            <div style="background:white;max-width:720px;width:90%;border-radius:16px;overflow:hidden;position:relative;">
-                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;z-index:10;color:#2b2263;">×</button>
-                <img src="${nft.image_url || nft.image_preview_url}" style="width:100%;display:block;" alt="${nft.name}">
+            <div style="background:white; max-width:800px; width:90%; border-radius:16px; overflow:hidden; position:relative;">
+                <button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="position:absolute;top:15px;right:15px;font-size:32px;background:none;border:none;cursor:pointer;color:#2b2263;">×</button>
+                
+                <img src="${imagePath}" style="width:100%; display:block;" alt="${item.name}">
+                
                 <div style="padding:25px;">
-                    <h3 style="margin:0 0 12px 0;">${nft.name || 'Cartoons NFT'}</h3>
-                    <a href="${nft.permalink || 'https://opensea.io/collection/cartoonsnft'}" target="_blank" style="color:#2b2263;text-decoration:underline;">View on OpenSea →</a>
-                    <button onclick="downloadImage('${nft.image_url || nft.image_preview_url}', '${nft.name}')" style="margin-left:15px;padding:10px 20px;background:#2b2263;color:white;border:none;border-radius:8px;cursor:pointer;">Download Image</button>
+                    <h3 style="margin:0 0 15px 0;">${item.name}</h3>
+                    <a href="#" target="_blank" style="color:#2b2263; text-decoration:underline;">View on OpenSea →</a>
+                    <button onclick="downloadImage('${imagePath}', '${item.name}')" 
+                            style="margin-left:15px; padding:10px 20px; background:#2b2263; color:white; border:none; border-radius:8px; cursor:pointer;">
+                        Download
+                    </button>
                 </div>
             </div>
         `;
@@ -63,18 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.downloadImage = (url, name) => {
         const a = document.createElement('a');
         a.href = url;
-        a.download = name ? `${name}.png` : 'cartoons-nft.png';
+        a.download = name;
         a.click();
     };
 
-    // Load the gallery
-    loadNfts();
+    // Initial render - show 1/1s by default
+    renderGallery(oneOfOnes);
 
-    // Filter buttons (basic for now)
+    // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            // For now we only have 1/1s, so just re-render
+            renderGallery(oneOfOnes);
         });
     });
 
