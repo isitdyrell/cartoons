@@ -145,12 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==================== LEGAL MODAL ====================
-    const modal = document.getElementById('legalModal');
+    const legalModal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
     const bodyEl = document.getElementById('modalBody');
     const closeBtn = document.getElementById('modalClose');
 
-    if (modal && titleEl && bodyEl && closeBtn) {
+    if (legalModal && titleEl && bodyEl && closeBtn) {
         const content = {
             faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
             disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
@@ -165,18 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (type && content[type]) {
                     titleEl.textContent = link.textContent.trim();
                     bodyEl.innerHTML = content[type];
-                    modal.classList.add('open');
+                    legalModal.classList.add('open');
                 }
             });
         });
 
-        closeBtn.addEventListener('click', () => modal.classList.remove('open'));
-        modal.addEventListener('click', e => {
-            if (e.target === modal) modal.classList.remove('open');
+        closeBtn.addEventListener('click', () => legalModal.classList.remove('open'));
+        legalModal.addEventListener('click', e => {
+            if (e.target === legalModal) legalModal.classList.remove('open');
         });
     }
 
-        // ==================== FLOOR PRICE ====================
+    // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
@@ -199,9 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-    // ==================== DARK / LIGHT MODE TOGGLE ====================
+    // ==================== DARK / LIGHT MODE ====================
     const themeToggle = document.getElementById('theme-toggle');
-    
     if (themeToggle) {
         const currentTheme = localStorage.getItem('theme') || 'light';
 
