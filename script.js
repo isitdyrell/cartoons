@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==================== FLOOR PRICE ====================
+        // ==================== FLOOR PRICE ====================
     const floorItem = document.getElementById('floorPriceItem');
     if (floorItem) {
         async function updateFloorPrice() {
@@ -197,5 +197,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateFloorPrice();
         setInterval(updateFloorPrice, 300000);
+    }
+
+    // ==================== DARK / LIGHT MODE TOGGLE ====================
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    if (themeToggle) {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            }
+        });
     }
 });
