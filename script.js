@@ -85,22 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==================== GAMES PAGE ====================
     const gamesGrid = document.getElementById('games-grid');
     if (gamesGrid) {
-        const games = [
+                const games = [
             {
                 title: "Lucky Slots",
-                image: "assets/games/lucky-slots.jpg",   // replace with real image when ready
+                image: "assets/games/lucky-slots.jpg",
                 tags: ["Holders Only", "Daily Spin"],
                 description: "Spin once per day for a chance to win free NFTs, ETH, and exclusive rewards. Only verified Cartoons holders can play.",
-                buttonText: "Play Now",
-                buttonLink: "luckyspin.html"
+                buttons: [
+                    { text: "Play Now", link: "luckyspin.html" }
+                ]
             },
             {
-                title: "Franky's Diner",
+                title: "Franky's Adventures Skin",
                 image: "assets/games/frankys-diner.jpg",
                 tags: ["Collab", "Mobile"],
-                description: "Play as a Cartoons Cloudy skin in Franky's Adventure! A fun mobile game collab with the Franky's Diner team.",
-                buttonText: "Play Now",
-                buttonLink: "https://frankysdiner.com"
+                description: "Play as Cloudy in Franky's Adventures! A fun mobile game collab with the Franky's Diner team.",
+                buttons: [
+                    { text: "Play on Android", link: "https://play.google.com/store/apps/details?id=com.LonelyLilyStudios.FrankysAdventures&hl=en-US" },
+                    { text: "Play on iOS", link: "https://apps.apple.com/ca/app/frankys-adventures/id6478423690" }
+                ]
             }
         ];
 
@@ -115,7 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <h3>${game.title}</h3>
                     <p>${game.description}</p>
-                    <a href="${game.buttonLink}" class="play-btn">${game.buttonText}</a>
+                    <div class="game-buttons">
+                        ${game.buttons.map(btn => `
+                            <a href="${btn.link}" target="_blank" class="play-btn">${btn.text}</a>
+                        `).join('')}
+                    </div>
                 </div>
             `;
             gamesGrid.appendChild(card);

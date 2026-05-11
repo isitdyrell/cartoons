@@ -925,3 +925,16 @@ footer p {
   color: #2b2263;
   border: 2px solid #2b2263;
 }
+
+.game-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.game-buttons .play-btn {
+    flex: 1;
+    text-align: center;
+    min-width: 140px;
+}
