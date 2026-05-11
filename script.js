@@ -199,8 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-    // ==================== DARK / LIGHT MODE ====================
+    // ==================== DARK / LIGHT MODE TOGGLE ====================
     const themeToggle = document.getElementById('theme-toggle');
+    
     if (themeToggle) {
         const currentTheme = localStorage.getItem('theme') || 'light';
 
@@ -220,5 +221,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 themeToggle.textContent = '🌙';
             }
         });
+        
+        console.log('✅ Dark mode toggle initialized');
+    } else {
+        console.error('Theme toggle button not found! Check ID in HTML.');
     }
 });
