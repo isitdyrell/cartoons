@@ -144,6 +144,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+// ==================== GAMES PAGE ====================
+    const gamesGrid = document.getElementById('games-grid');
+    if (gamesGrid) {
+        const games = [
+            {
+                title: "Lucky Slots",
+                image: "assets/games/lucky-slots.jpg",   // replace with real image later
+                tags: ["Holders Only", "Daily Spin"],
+                description: "Spin once per day for a chance to win free NFTs, ETH, and exclusive rewards. Only verified Cartoons holders can play.",
+                buttonText: "Play Now",
+                buttonLink: "luckyspin.html"
+            },
+            {
+                title: "Franky's Diner",
+                image: "assets/games/frankys-diner.jpg",   // replace with real image later
+                tags: ["Collab", "Mobile"],
+                description: "Play as a Cartoons Cloudy skin in Franky's Adventure! A fun mobile game collab with the Franky's Diner team.",
+                buttonText: "Play Now",
+                buttonLink: "https://frankysdiner.com"
+            }
+        ];
+
+        games.forEach(game => {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.innerHTML = `
+                <img src="${game.image}" alt="${game.title}">
+                <div class="game-card-content">
+                    <div class="game-tags">
+                        ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <h3>${game.title}</h3>
+                    <p>${game.description}</p>
+                    <a href="${game.buttonLink}" class="play-btn">${game.buttonText}</a>
+                </div>
+            `;
+            gamesGrid.appendChild(card);
+        });
+    }
+
     // ==================== LEGAL MODAL ====================
     const legalModal = document.getElementById('legalModal');
     const titleEl = document.getElementById('modalTitle');
