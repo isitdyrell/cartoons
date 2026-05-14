@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const games = [
             {
                 title: "LuckyStars Game",
-                image: "assets/activations/luckystars.jpg",
+                image: "assets/activations/luckystars.png",
                 tags: ["REQ: Cartoons NFT", "Daily Spin"],
                 description: "Spin once per day for a chance to win free NFTs, ETH, and exclusive rewards. Only verified Cartoons holders can play.",
                 buttons: [
