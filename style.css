@@ -883,10 +883,9 @@ footer p {
 
 .game-card img {
     width: 100%;
-    height: auto;                    /* Fixed height for consistent cards */
-    aspect-ratio: 16 / 9;            /* Forces perfect 16:9 ratio */
-    object-fit: cover;                /* Fills the whole area */
-    object-position: center;          /* Centers the important part */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
     display: block;
 }
 
