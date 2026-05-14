@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gamesGrid) {
                 const games = [
             {
-                title: "LuckyStars Game",
+                title: "Lucky Stars",
                 image: "assets/activations/luckystars.png",
-                tags: ["REQ: Cartoons NFT", "Daily Spin"],
+                tags: ["Daily Spin", ],
                 description: "Spin once per day for a chance to win free NFTs, ETH, and exclusive rewards. Only verified Cartoons holders can play.",
                 buttons: [
                     { text: "Play Now", link: "luckystars.html" }
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 title: "Franky's Adventures (Cloudy Skin)",
                 image: "assets/activations/frankysadventures.gif",
-                tags: ["REQ: Cartoons NFT", "Collab"],
+                tags: ["Collab"],
                 description: "Play as Cloudy in Franky's Adventures! A fun mobile game collab with the Franky's Diner team.",
                 buttons: [
                     { text: "Play on Android", link: "https://play.google.com/store/apps/details?id=com.LonelyLilyStudios.FrankysAdventures&hl=en-US" },
