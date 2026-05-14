@@ -883,10 +883,10 @@ footer p {
 
 .game-card img {
     width: 100%;
-    height: 260px;                    /* Taller area for logos */
-    object-fit: contain;              /* Keeps full logo visible, no cropping */
-    object-position: center;          /* Centers the image */
-    box-sizing: border-box;
+    height: 220px;                    /* Fixed height for consistent cards */
+    object-fit: cover;                /* Fills the whole area */
+    object-position: center;          /* Centers the important part */
+    display: block;
 }
 
 .game-card-content {
