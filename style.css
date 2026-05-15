@@ -969,21 +969,30 @@ footer p {
   position: absolute;
   bottom: 5%;
   left: 5%;
+  right: 5%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
   color: #2b2263;
   z-index: 2;
 }
 
 .hero-title {
-  font-size: 3.2rem;
-  margin: 0 0 0.8rem 0;
+  font-size: 2rem;
+  margin: 0;
   font-weight: normal;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .hero-text {
   font-size: 1rem;
-  max-width: 420px;
-  margin-bottom: 1rem;
+  line-height: 1.5;
+  max-width: 480px;
+  flex: 1;
+  margin: 0;
+  color: #2b2263;
 }
 
 .play-btn {
@@ -994,7 +1003,8 @@ footer p {
   border: 2px solid #2b2263;
   text-decoration: none;
   display: inline-block;
-  margin-top: 1rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .play-btn:hover {
