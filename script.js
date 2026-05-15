@@ -223,6 +223,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial grid
         createGrid();
 
+    // ==================== TEST SPIN BUTTON ====================
+        const testSpinBtn = document.getElementById('test-spin-btn');
+        if (testSpinBtn) {
+            testSpinBtn.addEventListener('click', () => {
+            spinAnimation();   // Reuse the same spin animation
+            });
+        }
+
         // Spin button
         const spinBtn = document.getElementById('spin-btn');
         if (spinBtn) {
