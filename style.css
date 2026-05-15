@@ -917,6 +917,7 @@ footer p {
   color: white;
   padding: 12px 28px;
   border-radius: 10px;
+  border: 2px solid #2b2263;
   text-decoration: none;
   display: inline-block;
   margin-top: 1rem;
@@ -966,17 +967,16 @@ footer p {
 
 .hero-content {
   position: absolute;
-  bottom: 15%;
-  left: 8%;
-  color: white;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  bottom: 5%;
+  left: 5%;
+  color: #2b2263;
   z-index: 2;
 }
 
 .hero-title {
   font-size: 3.2rem;
   margin: 0 0 0.8rem 0;
-  font-weight: bold;
+  font-weight: normal;
   line-height: 1;
 }
 
@@ -989,17 +989,16 @@ footer p {
 .play-btn {
   background: #2b2263;
   color: white;
-  padding: 14px 32px;
-  border-radius: 12px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: 2px solid #2b2263;
   text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: normal;
   display: inline-block;
-  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .play-btn:hover {
   background: white;
   color: #2b2263;
-  transform: scale(1.05);
+  border: 2px solid #2b2263;
 }
