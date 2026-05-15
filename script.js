@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-        // ==================== LUCKY STARS GAME ====================
+    // ==================== LUCKY STARS GAME ====================
     const luckyGrid = document.getElementById('game-grid');
     if (luckyGrid) {
         
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-            function spinAnimation() {
+        function spinAnimation() {
             const tiles = luckyGrid.querySelectorAll('.game-tile');
             tiles.forEach((tile, index) => {
                 const img = tile.querySelector('img');
