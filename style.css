@@ -1012,3 +1012,90 @@ footer p {
   color: #2b2263;
   border: 2px solid #2b2263;
 }
+
+/* ==========================================================================
+   LUCKY STARS GAME
+   ========================================================================== */
+
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.game-tile {
+  aspect-ratio: 1 / 1;
+  background: white;
+  border: 3px solid #2b2263;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.game-tile.spinning {
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-200%); }
+}
+
+.logo-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.luckystars-logo {
+  max-width: 420px;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Controls */
+.game-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.control-btn {
+  padding: 12px 24px;
+  background: white;
+  border: 2px solid #2b2263;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.spin-btn {
+  padding: 16px 48px;
+  background: #2b2263;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucky Stars - cartoons.io</title>
+  <link rel="stylesheet" href="https://use.typekit.net/eyd0ghc.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background:#DDDDDD;">
+
+<!-- Legal Modal / Chatbox -->
+<div class="legal-modal" id="legalModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Title</h3>
+      <button class="modal-close" id="modalClose">x</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content changes based on which link was clicked -->
+    </div>
+  </div>
+</div>
+
+<body>
+<header>
+  <div class="header-container">
+    <!-- Logo linked to home -->
+    <a href="index.html" class="logo-link">
+      <img src="assets/wordmark.png" alt="Cartoons Wordmark" class="logo">
+    </a>
+
+<!-- Navigation -->
+<nav style="display:flex; align-items:center; gap: 2rem;">
+    <a href="https://opensea.io/collection/cartoonsnft/explore" target="_blank" rel="noopener noreferrer">nfts</a>
+    <a href="activations.html">activations</a>
+    <a href="art.html">art</a>
+    <a href="docs.html">docs</a>
+    
+    <!-- Social Icons - placed to the right of the menu -->
+    <div class="social-links" style="display:flex; gap:12px; align-items:center;">
+        <a href="https://x.com/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <img src="assets/icons/xBL.png" alt="X icon" class="social-icon">
+        </a>
+        <a href="https://discord.gg/Xs4Cnn3bAp" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <img src="assets/icons/discordBL.png" alt="Discord icon" class="social-icon">
+        </a>
+    </div>
+</nav>
+  </div>
+
+<!-- Centered 2px line with 20px side margins -->
+<div class="divider-line"></div>
+
+</header>
+
+<main>
+  <div class="spacer-100"></div>
+
+  <!-- Lucky Stars Logo -->
+  <div class="logo-container">
+    <img src="assets/activations/luckystars.png" alt="Lucky Stars" class="luckystars-logo">
+  </div>
+
+  <!-- Game Area -->
+  <div class="game-container">
+    <div class="game-grid" id="game-grid">
+      <!-- 9 tiles populated by JS -->
+    </div>
+
+    <!-- Controls -->
+    <div class="game-controls">
+      <button class="control-btn" id="verify-btn">Verify Holdings</button>
+      <div class="spins-left" id="spins-left">Spins Left: <span>1</span></div>
+      <button class="control-btn" id="rules-btn">Rules</button>
+      <button class="spin-btn" id="spin-btn">SPIN</button>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
