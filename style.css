@@ -1110,6 +1110,7 @@ footer p {
 
 .control-btn:hover {
   background: #2b2263;
+  border: 2px solid #2b2263;
   color: white;
 }
 
@@ -1126,12 +1127,15 @@ footer p {
 }
 
 .test-btn {
-  background: #666;
-  color: white;
+  background: white;
+  border: 2px solid #2b2263;
+  color: #2b2263;
 }
 
 .test-btn:hover {
-  background: #555;
+  background: #2b2263;
+  border: 2px solid #2b2263;
+  color: white;
 }
 
 .spin-btn:disabled {
@@ -1140,7 +1144,7 @@ footer p {
 }
 
 .spins-left {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #2b2263;
   font-weight: normal;
 }
