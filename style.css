@@ -1054,7 +1054,7 @@ footer p {
   height: 40%;
 }
 
-/* Spin animation - only the image moves */
+/* Spin animation - only the image moves, clipped inside tile */
 .game-tile.spinning img {
   animation: iconSpin 0.8s linear infinite;
 }

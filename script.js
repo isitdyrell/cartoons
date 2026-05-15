@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function spinAnimation() {
+            function spinAnimation() {
             const tiles = luckyGrid.querySelectorAll('.game-tile');
             tiles.forEach((tile, index) => {
                 const img = tile.querySelector('img');
