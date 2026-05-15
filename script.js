@@ -184,17 +184,23 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-// ==================== LUCKY STARS GAME ====================
+    // ==================== LUCKY STARS GAME ====================
     const luckyGrid = document.getElementById('game-grid');
     if (luckyGrid) {
-        const icons = ['☁️', '⭐'];
+        
+        const cloudImg = "assets/activations/CLOUD.png";
+        const starImg = "assets/activations/STAR.png";
 
         function createGrid() {
             luckyGrid.innerHTML = '';
             for (let i = 0; i < 9; i++) {
                 const tile = document.createElement('div');
                 tile.className = 'game-tile';
-                tile.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Randomly start with Cloud or Star
+                const isStar = Math.random() > 0.5;
+                tile.innerHTML = `<img src="${isStar ? starImg : cloudImg}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                
                 luckyGrid.appendChild(tile);
             }
         }
@@ -203,10 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const tiles = luckyGrid.querySelectorAll('.game-tile');
             tiles.forEach((tile, index) => {
                 tile.classList.add('spinning');
+                
                 setTimeout(() => {
                     tile.classList.remove('spinning');
-                    tile.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-                }, 600 + index * 70);
+                    
+                    // Random new icon after spin
+                    const isStar = Math.random() > 0.5;
+                    tile.innerHTML = `<img src="${isStar ? starImg : cloudImg}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                }, 700 + index * 80); // staggered spin effect
             });
         }
 
