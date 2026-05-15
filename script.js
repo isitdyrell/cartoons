@@ -183,4 +183,53 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFloorPrice();
         setInterval(updateFloorPrice, 300000);
     }
+
+// ==================== LUCKY STARS GAME ====================
+    const luckyGrid = document.getElementById('game-grid');
+    if (luckyGrid) {
+        const icons = ['☁️', '⭐'];
+
+        function createGrid() {
+            luckyGrid.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'game-tile';
+                tile.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                luckyGrid.appendChild(tile);
+            }
+        }
+
+        function spinAnimation() {
+            const tiles = luckyGrid.querySelectorAll('.game-tile');
+            tiles.forEach((tile, index) => {
+                tile.classList.add('spinning');
+                setTimeout(() => {
+                    tile.classList.remove('spinning');
+                    tile.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                }, 600 + index * 70);
+            });
+        }
+
+        // Initial grid
+        createGrid();
+
+        // Spin button
+        const spinBtn = document.getElementById('spin-btn');
+        if (spinBtn) {
+            spinBtn.addEventListener('click', () => {
+                if (spinBtn.disabled) return;
+                
+                spinBtn.disabled = true;
+                spinBtn.textContent = "SPINNING...";
+
+                spinAnimation();
+
+                setTimeout(() => {
+                    spinBtn.disabled = false;
+                    spinBtn.textContent = "SPIN";
+                }, 2200);
+            });
+        }
+    }
+
 });

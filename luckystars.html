@@ -60,22 +60,29 @@
     <img src="assets/activations/luckystarslogo.png" alt="Lucky Stars" class="luckystars-logo">
   </div>
 
-  <!-- Game Area -->
+  <!-- Verify Button -->
+  <div style="text-align:left; max-width:800px; margin:0 auto 1rem;">
+    <button class="control-btn" id="verify-btn">Verify to Play</button>
+  </div>
+
+  <!-- Game Grid -->
   <div class="game-container">
     <div class="game-grid" id="game-grid">
       <!-- 9 tiles populated by JS -->
     </div>
 
-        <!-- Controls -->
+    <!-- Controls -->
     <div class="game-controls">
-      <button class="control-btn" id="verify-btn">VERIFY</button>
-      <button class="control-btn" id="rules-btn">RULES</button>
+      <button class="control-btn" id="rules-btn">R</button>
       
       <div class="spin-area">
-        <button class="spin-btn" id="spin-btn">SPIN</button>
+        <button class="spin-btn" id="spin-btn" disabled>SPIN</button>
         <div class="spins-left" id="spins-left">Spins Left: <span>1</span></div>
       </div>
     </div>
+  </div>
+
+  <div class="spacer-100"></div>
 </main>
 
 <!-- Centered 2px line with 20px side margins -->
