@@ -940,3 +940,66 @@ footer p {
     text-align: center;
     min-width: 140px;
 }
+
+/* ==========================================================================
+   LUCKY STARS HERO BANNER
+   ========================================================================== */
+
+.lucky-stars-hero {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.hero-container {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(43, 34, 99, 0.15);
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 15%;
+  left: 8%;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  margin: 0 0 0.8rem 0;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.hero-text {
+  font-size: 1.25rem;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+}
+
+.play-btn {
+  background: #2b2263;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: normal;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+  background: white;
+  color: #2b2263;
+  transform: scale(1.05);
+}
