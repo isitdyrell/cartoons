@@ -1032,22 +1032,31 @@ footer p {
 
 .game-tile {
   aspect-ratio: 1 / 1;
+  background: white;
   border: 4px solid #2b2263;
-  border-radius: 10px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4.5rem;
-  overflow: hidden;
+  overflow: hidden;               /* Important - clips the animation */
+  position: relative;
 }
 
-.game-tile.spinning {
-  animation: spin 0.6s linear infinite;
+.game-tile img {
+  width: 65%;                     /* Smaller icons inside the tile */
+  height: 65%;
+  object-fit: contain;
+  transition: transform 0.1s;
 }
 
-@keyframes spin {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-200%); }
+/* Spin animation - only the image moves */
+.game-tile.spinning img {
+  animation: iconSpin 0.8s linear infinite;
+}
+
+@keyframes iconSpin {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-300%); }
 }
 
 .logo-container {
@@ -1065,37 +1074,13 @@ footer p {
   50% { transform: scale(1.05); }
 }
 
-/* Controls */
+/* Controls - Clean layout */
 .game-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.control-btn {
-  padding: 12px 24px;
-  background: white;
-  border: 2px solid #2b2263;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-.spin-btn {
-  padding: 16px 48px;
-  background: #2b2263;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.spin-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .spin-area {
@@ -1105,34 +1090,58 @@ footer p {
   gap: 8px;
 }
 
-.spins-left {
-  font-size: 1.1rem;
-  color: #2b2263;
-  font-weight: normal;
+.spin-buttons {
+  display: flex;
+  gap: 12px;
 }
 
-.control-btn, .spin-btn {
+.control-btn, .spin-btn, .test-btn {
   padding: 14px 32px;
   font-size: 1.1rem;
+  border-radius: 10px;
+  font-weight: normal;
+  transition: all 0.3s ease;
+}
+
+.control-btn {
+  background: white;
+  border: 2px solid #2b2263;
+  color: #2b2263;
+}
+
+.control-btn:hover {
+  background: #2b2263;
+  color: white;
+}
+
+.spin-btn {
+  background: #2b2263;
+  color: white;
+  border: none;
+}
+
+.spin-btn:hover:not(:disabled) {
+  background: white;
+  color: #2b2263;
+  border: 2px solid #2b2263;
+}
+
+.test-btn {
+  background: #666;
+  color: white;
+}
+
+.test-btn:hover {
+  background: #555;
 }
 
 .spin-btn:disabled {
   background: #aaaaaa;
-  color: white;
   cursor: not-allowed;
 }
 
-.spin-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.test-btn {
-  background: #666 !important;
-}
-
-.test-btn:hover {
-  background: #555 !important;
+.spins-left {
+  font-size: 1.1rem;
+  color: #2b2263;
+  font-weight: normal;
 }
