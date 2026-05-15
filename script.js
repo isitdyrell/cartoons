@@ -205,19 +205,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function spinAnimation() {
+                function spinAnimation() {
             const tiles = luckyGrid.querySelectorAll('.game-tile');
+            
             tiles.forEach((tile, index) => {
-                const img = tile.querySelector('img');
-                if (img) img.classList.add('spinning');
-                
+                const currentImg = tile.querySelector('img');
+                if (currentImg) currentImg.classList.add('spinning');
+
                 setTimeout(() => {
-                    if (img) img.classList.remove('spinning');
-                    
+                    // Create new random icon
                     const isStar = Math.random() > 0.5;
                     const imgSrc = isStar ? starImg : cloudImg;
+                    
                     tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
-                }, 700 + index * 80);
+                    
+                    // Apply spinning to the NEW image
+                    const newImg = tile.querySelector('img');
+                    if (newImg) newImg.classList.add('spinning');
+
+                    // Remove spinning after animation completes
+                    setTimeout(() => {
+                        if (newImg) newImg.classList.remove('spinning');
+                    }, 800);
+                }, 600 + index * 90); // staggered timing
             });
         }
 
