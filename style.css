@@ -1099,3 +1099,23 @@ footer p {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.spin-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.spins-left {
+  font-size: 1rem;
+  color: #2b2263;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* Make the SPIN button a bit bigger */
+.spin-btn {
+  padding: 18px 56px;
+  font-size: 1.4rem;
+}
