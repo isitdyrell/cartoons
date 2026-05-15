@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-    // ==================== LUCKY STARS GAME ====================
+        // ==================== LUCKY STARS GAME ====================
     const luckyGrid = document.getElementById('game-grid');
     if (luckyGrid) {
         
@@ -197,10 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tile = document.createElement('div');
                 tile.className = 'game-tile';
                 
-                // Randomly start with Cloud or Star
                 const isStar = Math.random() > 0.5;
-                tile.innerHTML = `<img src="${isStar ? starImg : cloudImg}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                const imgSrc = isStar ? starImg : cloudImg;
                 
+                tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
                 luckyGrid.appendChild(tile);
             }
         }
@@ -208,30 +208,29 @@ document.addEventListener('DOMContentLoaded', () => {
         function spinAnimation() {
             const tiles = luckyGrid.querySelectorAll('.game-tile');
             tiles.forEach((tile, index) => {
-                tile.classList.add('spinning');
+                const img = tile.querySelector('img');
+                if (img) img.classList.add('spinning');
                 
                 setTimeout(() => {
-                    tile.classList.remove('spinning');
+                    if (img) img.classList.remove('spinning');
                     
-                    // Random new icon after spin
                     const isStar = Math.random() > 0.5;
-                    tile.innerHTML = `<img src="${isStar ? starImg : cloudImg}" alt="${isStar ? 'Star' : 'Cloud'}">`;
-                }, 700 + index * 80); // staggered spin effect
+                    const imgSrc = isStar ? starImg : cloudImg;
+                    tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                }, 700 + index * 80);
             });
         }
 
         // Initial grid
         createGrid();
 
-    // ==================== TEST SPIN BUTTON ====================
+        // Test Spin Button
         const testSpinBtn = document.getElementById('test-spin-btn');
         if (testSpinBtn) {
-            testSpinBtn.addEventListener('click', () => {
-            spinAnimation();   // Reuse the same spin animation
-            });
+            testSpinBtn.addEventListener('click', spinAnimation);
         }
 
-        // Spin button
+        // Main Spin Button
         const spinBtn = document.getElementById('spin-btn');
         if (spinBtn) {
             spinBtn.addEventListener('click', () => {
