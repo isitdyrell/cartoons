@@ -363,6 +363,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 2800);
             });
         }
+
+                // ==================== DEMO WIN CARDS ====================
+        function createDemoGrids() {
+            // Big Win Demo (9 Stars)
+            const bigWinDemo = document.querySelector('.big-win-demo');
+            if (bigWinDemo) {
+                bigWinDemo.innerHTML = '';
+                for (let i = 0; i < 9; i++) {
+                    const tile = document.createElement('div');
+                    tile.className = 'game-tile winning';
+                    tile.innerHTML = `<img src="${starImg}" alt="Star">`;
+                    bigWinDemo.appendChild(tile);
+                }
+            }
+
+            // Free Spins Demo (one row of Bolts)
+            const freeSpinsDemo = document.querySelector('.free-spins-demo');
+            if (freeSpinsDemo) {
+                freeSpinsDemo.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    const tile = document.createElement('div');
+                    tile.className = 'game-tile winning';
+                    tile.innerHTML = `<img src="${boltImg}" alt="Bolt">`;
+                    freeSpinsDemo.appendChild(tile);
+                }
+            }
+        }
+
+        // Run demo grids after page loads
+        createDemoGrids();
     }
 
 });
