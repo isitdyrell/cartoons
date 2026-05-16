@@ -193,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const heartImg = "assets/activations/HEART.png";
         const boltImg  = "assets/activations/BOLT.png";
 
-        // All available icons
         const allIcons = [
             { src: cloudImg, name: "Cloud" },
             { src: starImg,  name: "Star" },
@@ -201,15 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: boltImg,  name: "Bolt" }
         ];
 
+        let spinsLeft = 3;   // starting spins (you can change this)
+
         function createGrid() {
             luckyGrid.innerHTML = '';
             for (let i = 0; i < 9; i++) {
                 const tile = document.createElement('div');
                 tile.className = 'game-tile';
-                
                 const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
                 tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
-                
                 luckyGrid.appendChild(tile);
             }
         }
@@ -220,56 +219,107 @@ document.addEventListener('DOMContentLoaded', () => {
             const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
             
             // Group into 3 rows
-            const rows = [
-                tiles.slice(0, 3),   // top row
-                tiles.slice(3, 6),   // middle row
-                tiles.slice(6, 9)    // bottom row
-            ];
+            const rows = [tiles.slice(0, 3), tiles.slice(3, 6), tiles.slice(6, 9)];
 
-            const flipSpeed = 55;                    // how fast icons flip while spinning
-            const stopDelays = [1100, 1700, 2300];   // top row stops first, bottom last
+            const flipSpeed = 55;
+            const stopDelays = [1100, 1700, 2300];
 
             rows.forEach((row, rowIndex) => {
-                let flipInterval;
-
-                // Rapid flipping
-                flipInterval = setInterval(() => {
+                let flipInterval = setInterval(() => {
                     row.forEach(tile => {
                         const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
                         tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
                     });
                 }, flipSpeed);
 
-                // Stop this row
                 setTimeout(() => {
                     clearInterval(flipInterval);
-                    
                     row.forEach(tile => {
                         const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
                         tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
                     });
+
+                    // After the LAST row stops → check for wins
+                    if (rowIndex === 2) {
+                        setTimeout(checkWinConditions, 300);
+                    }
                 }, stopDelays[rowIndex]);
             });
         }
-        
+
+        function checkWinConditions() {
+            const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
+            const grid = [
+                tiles.slice(0, 3),
+                tiles.slice(3, 6),
+                tiles.slice(6, 9)
+            ];
+
+            let boltRows = 0;
+            let isFullStars = true;
+
+            // Check each row for 3 Bolts
+            grid.forEach(row => {
+                const rowIcons = row.map(tile => tile.querySelector('img').src);
+                if (rowIcons.every(src => src.includes('BOLT'))) {
+                    boltRows++;
+                }
+                if (!rowIcons.every(src => src.includes('STAR'))) {
+                    isFullStars = false;
+                }
+            });
+
+            let message = "";
+            let winningTiles = [];
+
+            if (boltRows > 0) {
+                spinsLeft += boltRows;
+                message = `+${boltRows} FREE SPIN${boltRows > 1 ? 'S' : ''}!`;
+                // All tiles in bolt rows win
+                grid.forEach((row, i) => {
+                    if (row.every(t => t.querySelector('img').src.includes('BOLT'))) {
+                        winningTiles.push(...row);
+                    }
+                });
+            }
+
+            if (isFullStars) {
+                message = "🌟 BIG WIN! 🌟";
+                winningTiles = tiles;   // whole grid celebrates
+            }
+
+            // Update status
+            const statusEl = document.getElementById('status-text');
+            if (statusEl) statusEl.innerHTML = message || `Spins Left: <span>${spinsLeft}</span>`;
+
+            // Apply celebration animation
+            if (winningTiles.length > 0) {
+                winningTiles.forEach(tile => tile.classList.add('winning'));
+
+                // Remove animation after 20 seconds (or next spin)
+                setTimeout(() => {
+                    winningTiles.forEach(tile => tile.classList.remove('winning'));
+                }, 20000);
+            }
+        }
+
         // Initial grid
         createGrid();
 
         // Test Spin Button
         const testSpinBtn = document.getElementById('test-spin-btn');
-        if (testSpinBtn) {
-            testSpinBtn.addEventListener('click', spinAnimation);
-        }
+        if (testSpinBtn) testSpinBtn.addEventListener('click', spinAnimation);
 
         // Main Spin Button
         const spinBtn = document.getElementById('spin-btn');
         if (spinBtn) {
             spinBtn.addEventListener('click', () => {
-                if (spinBtn.disabled) return;
-                
+                if (spinBtn.disabled || spinsLeft <= 0) return;
+
                 spinBtn.disabled = true;
                 spinBtn.textContent = "SPINNING...";
 
+                spinsLeft--;
                 spinAnimation();
 
                 setTimeout(() => {

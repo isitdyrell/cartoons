@@ -1149,3 +1149,25 @@ footer p {
   color: #2b2263;
   font-weight: normal;
 }
+
+/* === WIN CELEBRATION ANIMATION === */
+.game-tile.winning {
+    animation: winPulse 0.9s ease-in-out infinite alternate;
+}
+
+.game-tile.winning img {
+    animation: winShake 0.55s ease-in-out infinite;
+}
+
+@keyframes winPulse {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.18); }
+}
+
+@keyframes winShake {
+    0%   { transform: rotate(-6deg); }
+    25%  { transform: rotate(6deg); }
+    50%  { transform: rotate(-6deg); }
+    75%  { transform: rotate(6deg); }
+    100% { transform: rotate(-6deg); }
+}
