@@ -1054,14 +1054,14 @@ footer p {
   height: 40%;
 }
 
-/* Spin animation - only the image moves, clipped inside tile */
 .game-tile.spinning img {
-  animation: iconSpin 0.8s linear infinite;
+    animation: iconSpin 1.2s linear infinite;
+    display: block;
 }
 
 @keyframes iconSpin {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-300%); }
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-450%); }   /* Bigger movement */
 }
 
 .logo-container {
