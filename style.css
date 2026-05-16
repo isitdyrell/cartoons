@@ -1054,16 +1054,6 @@ footer p {
     height: 42%;
 }
 
-.game-tile.spinning img {
-    animation: iconSpin 1.2s linear infinite;
-    display: block;
-}
-
-@keyframes iconSpin {
-    0%   { transform: translateY(0); }
-    100% { transform: translateY(-520%); }   /* Very obvious movement */
-}
-
 .logo-container {
   text-align: center;
   margin: 2rem 0;

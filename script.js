@@ -206,32 +206,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function spinAnimation() {
-            console.log('🎰 Starting spin animation...');
+            console.log('🎰 Starting slot-machine spin...');
 
-            const tiles = luckyGrid.querySelectorAll('.game-tile');
+            const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
             
-            tiles.forEach((tile, index) => {
-                const currentImg = tile.querySelector('img');
-                if (currentImg) currentImg.classList.add('spinning');
+            // Group into 3 rows
+            const rows = [
+                tiles.slice(0, 3),   // top row
+                tiles.slice(3, 6),   // middle row
+                tiles.slice(6, 9)    // bottom row
+            ];
 
+            // How fast the icons flip while spinning
+            const flipSpeed = 60;     // milliseconds between flips
+            const totalSpinTimePerRow = [1200, 1800, 2400]; // top stops first, bottom last
+
+            rows.forEach((row, rowIndex) => {
+                let flipInterval;
+
+                // Start rapid flipping for this row
+                flipInterval = setInterval(() => {
+                    row.forEach(tile => {
+                        const isStar = Math.random() > 0.5;
+                        const imgSrc = isStar ? starImg : cloudImg;
+                        tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                    });
+                }, flipSpeed);
+
+                // Stop this row after its delay
                 setTimeout(() => {
-                    const isStar = Math.random() > 0.5;
-                    const imgSrc = isStar ? starImg : cloudImg;
-                    
-                    tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
-                    
-                    const newImg = tile.querySelector('img');
-                    if (newImg) {
-                        newImg.classList.add('spinning');
-                    }
+                    clearInterval(flipInterval);
 
-                    setTimeout(() => {
-                        if (newImg) newImg.classList.remove('spinning');
-                    }, 1100);
-                }, 650 + index * 110);
+                    // Final result for this row
+                    row.forEach(tile => {
+                        const isStar = Math.random() > 0.5;
+                        const imgSrc = isStar ? starImg : cloudImg;
+                        tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                    });
+                }, totalSpinTimePerRow[rowIndex]);
             });
         }
-        
+
         // Initial grid
         createGrid();
 
