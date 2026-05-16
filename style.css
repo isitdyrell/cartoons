@@ -1048,10 +1048,10 @@ footer p {
   transition: transform 0.1s;
 }
 
-/* Star gets smaller scaling */
+/* STAR gets a bit smaller */
 .game-tile img[src*="STAR"] {
-  width: 40%;
-  height: 40%;
+    width: 42%;
+    height: 42%;
 }
 
 .game-tile.spinning img {
@@ -1061,7 +1061,7 @@ footer p {
 
 @keyframes iconSpin {
     0%   { transform: translateY(0); }
-    100% { transform: translateY(-450%); }   /* Bigger movement */
+    100% { transform: translateY(-520%); }   /* Very obvious movement */
 }
 
 .logo-container {
