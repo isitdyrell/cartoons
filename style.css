@@ -1050,7 +1050,7 @@ footer p {
 
 /* Make STAR and BOLT a bit smaller */
 .game-tile img[src*="STAR"],
-.game-tile img[src*="BOLT"] {
+.game-tile img[src*="HEART"] {
     width: 42%;
     height: 42%;
 }
