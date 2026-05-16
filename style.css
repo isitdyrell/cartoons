@@ -1116,9 +1116,9 @@ footer p {
 }
 
 .spin-btn {
-  background: #2b2263;
+  background: #ffd049;
   color: white;
-  border: 2px solid #2b2263;
+  border: 2px solid #ffd049;
 }
 
 .spin-btn:hover:not(:disabled) {
@@ -1140,7 +1140,7 @@ footer p {
 }
 
 .spin-btn:disabled {
-  background: #aaaaaa;
+  background: #b9b7ff;
   cursor: not-allowed;
 }
 

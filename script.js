@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const img = tile.querySelector('img');
                         if (img) img.style.animation = '';
                     });
-                }, 20000);
+                }, 5000);
             }
         }
 
