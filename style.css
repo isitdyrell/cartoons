@@ -1041,15 +1041,16 @@ footer p {
   position: relative;
 }
 
+/* Icon sizing */
 .game-tile img {
-  width: 50%;                     /* Smaller icons inside the tile */
-  height: 50%;
-  object-fit: contain;
-  transition: transform 0.1s;
+    width: 50%;
+    height: 50%
+    object-fit: contain;
 }
 
-/* STAR gets a bit smaller */
-.game-tile img[src*="STAR"] {
+/* Make STAR and BOLT a bit smaller */
+.game-tile img[src*="STAR"],
+.game-tile img[src*="BOLT"] {
     width: 42%;
     height: 42%;
 }

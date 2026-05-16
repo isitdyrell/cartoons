@@ -184,12 +184,22 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-    // ==================== LUCKY STARS GAME ====================
+   // ==================== LUCKY STARS GAME ====================
     const luckyGrid = document.getElementById('game-grid');
     if (luckyGrid) {
         
         const cloudImg = "assets/activations/CLOUD.png";
-        const starImg = "assets/activations/STAR.png";
+        const starImg  = "assets/activations/STAR.png";
+        const heartImg = "assets/activations/HEART.png";
+        const boltImg  = "assets/activations/BOLT.png";
+
+        // All available icons
+        const allIcons = [
+            { src: cloudImg, name: "Cloud" },
+            { src: starImg,  name: "Star" },
+            { src: heartImg, name: "Heart" },
+            { src: boltImg,  name: "Bolt" }
+        ];
 
         function createGrid() {
             luckyGrid.innerHTML = '';
@@ -197,10 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tile = document.createElement('div');
                 tile.className = 'game-tile';
                 
-                const isStar = Math.random() > 0.5;
-                const imgSrc = isStar ? starImg : cloudImg;
+                const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
+                tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
                 
-                tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
                 luckyGrid.appendChild(tile);
             }
         }
@@ -217,36 +226,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 tiles.slice(6, 9)    // bottom row
             ];
 
-            // How fast the icons flip while spinning
-            const flipSpeed = 60;     // milliseconds between flips
-            const totalSpinTimePerRow = [1200, 1800, 2400]; // top stops first, bottom last
+            const flipSpeed = 55;                    // how fast icons flip while spinning
+            const stopDelays = [1100, 1700, 2300];   // top row stops first, bottom last
 
             rows.forEach((row, rowIndex) => {
                 let flipInterval;
 
-                // Start rapid flipping for this row
+                // Rapid flipping
                 flipInterval = setInterval(() => {
                     row.forEach(tile => {
-                        const isStar = Math.random() > 0.5;
-                        const imgSrc = isStar ? starImg : cloudImg;
-                        tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                        const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
+                        tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
                     });
                 }, flipSpeed);
 
-                // Stop this row after its delay
+                // Stop this row
                 setTimeout(() => {
                     clearInterval(flipInterval);
-
-                    // Final result for this row
+                    
                     row.forEach(tile => {
-                        const isStar = Math.random() > 0.5;
-                        const imgSrc = isStar ? starImg : cloudImg;
-                        tile.innerHTML = `<img src="${imgSrc}" alt="${isStar ? 'Star' : 'Cloud'}">`;
+                        const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
+                        tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
                     });
-                }, totalSpinTimePerRow[rowIndex]);
+                }, stopDelays[rowIndex]);
             });
         }
-
+        
         // Initial grid
         createGrid();
 
@@ -270,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     spinBtn.disabled = false;
                     spinBtn.textContent = "SPIN";
-                }, 2200);
+                }, 2800);
             });
         }
     }
