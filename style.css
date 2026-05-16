@@ -1150,17 +1150,17 @@ footer p {
   font-weight: normal;
 }
 
-//* === WIN CELEBRATION ANIMATION (only on the image) === */
+/* === WIN CELEBRATION ANIMATION - ONLY ON IMAGE === */
 .game-tile.winning img {
-    animation: winCelebration 0.85s ease-in-out infinite alternate;
+    animation: winCelebration 0.75s ease-in-out infinite alternate !important;
+    transform-origin: center;
 }
 
-/* Zoom + gentle shake - stays clipped inside the tile */
 @keyframes winCelebration {
     0%   { 
-        transform: scale(1) rotate(-4deg); 
+        transform: scale(1) rotate(-8deg); 
     }
     100% { 
-        transform: scale(1.22) rotate(4deg); 
+        transform: scale(1.35) rotate(8deg); 
     }
 }

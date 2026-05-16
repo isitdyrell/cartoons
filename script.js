@@ -306,11 +306,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (statusEl) statusEl.innerHTML = message;
 
-            // Celebration
+            // Celebration - force animation on images
             if (winningTiles.length > 0) {
-                winningTiles.forEach(tile => tile.classList.add('winning'));
+                winningTiles.forEach(tile => {
+                    tile.classList.add('winning');
+                    const img = tile.querySelector('img');
+                    if (img) img.style.animation = 'winCelebration 0.75s ease-in-out infinite alternate';
+                });
+
+                // Auto-remove after 20 seconds
                 setTimeout(() => {
-                    winningTiles.forEach(tile => tile.classList.remove('winning'));
+                    winningTiles.forEach(tile => {
+                        tile.classList.remove('winning');
+                        const img = tile.querySelector('img');
+                        if (img) img.style.animation = '';
+                    });
                 }, 20000);
             }
         }
