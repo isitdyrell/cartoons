@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ==================== WIN PROBABILITIES ====================
         const winProbabilities = {
             boltRow: 10,      // % chance per row for 3 Bolts
-            fullStars: 0.5,   // % chance for full 9 Stars
+            fullStars: 25,   // % chance for full 9 Stars
         };
         // ========================================================
 
