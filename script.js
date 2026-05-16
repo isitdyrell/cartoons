@@ -229,15 +229,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        function spinAnimation() {
+                function spinAnimation() {
             console.log('🎰 Starting slot-machine spin...');
-            clearWinAnimations();   // ← Stops any previous win animation instantly
+            clearWinAnimations();
 
             const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
             const rows = [tiles.slice(0, 3), tiles.slice(3, 6), tiles.slice(6, 9)];
 
             const flipSpeed = 55;
             const stopDelays = [1100, 1700, 2300];
+
+            // Decide if we're going for full stars this spin
+            const triggerFullStars = Math.random() * 100 < winProbabilities.fullStars;
 
             rows.forEach((row, rowIndex) => {
                 let flipInterval = setInterval(() => {
@@ -251,12 +254,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     clearInterval(flipInterval);
 
                     row.forEach(tile => {
-                        let finalIcon = allIcons[Math.floor(Math.random() * allIcons.length)].src;
+                        let finalIcon;
 
-                        if (Math.random() * 100 < winProbabilities.boltRow) {
-                            finalIcon = boltImg;
-                        } else if (rowIndex === 2 && Math.random() * 100 < winProbabilities.fullStars) {
+                        if (triggerFullStars) {
+                            // Force stars for full board win
                             finalIcon = starImg;
+                        } 
+                        else if (Math.random() * 100 < winProbabilities.boltRow) {
+                            finalIcon = boltImg;
+                        } 
+                        else {
+                            finalIcon = allIcons[Math.floor(Math.random() * allIcons.length)].src;
                         }
 
                         tile.innerHTML = `<img src="${finalIcon}" alt="">`;
