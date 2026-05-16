@@ -1043,16 +1043,9 @@ footer p {
 
 /* Icon sizing */
 .game-tile img {
-    width: 50%;
-    height: 50%
+    width: 100%;
+    height: 100%
     object-fit: contain;
-}
-
-/* Make STAR and BOLT a bit smaller */
-.game-tile img[src*="STAR"],
-.game-tile img[src*="BOLT"] {
-    width: 42%;
-    height: 42%;
 }
 
 .logo-container {
