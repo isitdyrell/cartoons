@@ -200,13 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: boltImg,  name: "Bolt" }
         ];
 
-        let spinsLeft = 3;
+        let spinsLeft = 0;   // ← Starts at 0 (no spins until connected)
 
         // ==================== WIN PROBABILITIES ====================
-        // Change these numbers anytime (0.01 to 25 recommended)
         const winProbabilities = {
-            boltRow: 10,      // % chance for each row to land 3 Bolts
-            fullStars: .5,   // % chance for full 9 Stars board
+            boltRow: 10,      // % chance per row for 3 Bolts
+            fullStars: 0.5,   // % chance for full 9 Stars
         };
         // ========================================================
 
@@ -221,8 +220,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function clearWinAnimations() {
+            const tiles = luckyGrid.querySelectorAll('.game-tile');
+            tiles.forEach(tile => {
+                tile.classList.remove('winning');
+                const img = tile.querySelector('img');
+                if (img) img.style.animation = '';
+            });
+        }
+
         function spinAnimation() {
             console.log('🎰 Starting slot-machine spin...');
+            clearWinAnimations();   // ← Stops any previous win animation instantly
 
             const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
             const rows = [tiles.slice(0, 3), tiles.slice(3, 6), tiles.slice(6, 9)];
@@ -241,26 +250,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     clearInterval(flipInterval);
 
-                    // === FINAL STOP WITH ODDS BIAS ===
                     row.forEach(tile => {
-                        let finalIcon;
+                        let finalIcon = allIcons[Math.floor(Math.random() * allIcons.length)].src;
 
-                        // Bias for Bolt rows
                         if (Math.random() * 100 < winProbabilities.boltRow) {
                             finalIcon = boltImg;
-                        } 
-                        // Bias for full Stars (only on last row)
-                        else if (rowIndex === 2 && Math.random() * 100 < winProbabilities.fullStars) {
+                        } else if (rowIndex === 2 && Math.random() * 100 < winProbabilities.fullStars) {
                             finalIcon = starImg;
-                        } 
-                        else {
-                            finalIcon = allIcons[Math.floor(Math.random() * allIcons.length)].src;
                         }
 
                         tile.innerHTML = `<img src="${finalIcon}" alt="">`;
                     });
 
-                    // Check wins after last row stops
                     if (rowIndex === 2) {
                         setTimeout(checkWinConditions, 400);
                     }
@@ -288,11 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            if (isFullStars) {
-                winningTiles = tiles; // whole board wins
-            }
+            if (isFullStars) winningTiles = tiles;
 
-            // Update status
             const statusEl = document.getElementById('status-text');
             let message = `Spins Left: <span>${spinsLeft}</span>`;
 
@@ -306,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (statusEl) statusEl.innerHTML = message;
 
-            // Celebration - force animation on images
             if (winningTiles.length > 0) {
                 winningTiles.forEach(tile => {
                     tile.classList.add('winning');
@@ -314,24 +311,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (img) img.style.animation = 'winCelebration 0.75s ease-in-out infinite alternate';
                 });
 
-                // Auto-remove after 20 seconds
                 setTimeout(() => {
                     winningTiles.forEach(tile => {
                         tile.classList.remove('winning');
                         const img = tile.querySelector('img');
                         if (img) img.style.animation = '';
                     });
-                }, 5000);
+                }, 20000);
             }
         }
 
-        // Initial grid
+        // ==================== INITIAL SETUP ====================
         createGrid();
 
-        const testSpinBtn = document.getElementById('test-spin-btn');
-        if (testSpinBtn) testSpinBtn.addEventListener('click', spinAnimation);
-
+        // Disable SPIN button by default
         const spinBtn = document.getElementById('spin-btn');
+        if (spinBtn) {
+            spinBtn.disabled = true;
+            const statusEl = document.getElementById('status-text');
+            if (statusEl) statusEl.innerHTML = `Spins Left: <span>0</span> <span style="color:#aaaaaa">(CONNECT TO PLAY)</span>`;
+        }
+
+        // Test button always works (for development)
+        const testSpinBtn = document.getElementById('test-spin-btn');
+        if (testSpinBtn) {
+            testSpinBtn.addEventListener('click', spinAnimation);
+        }
+
+        // Real SPIN button (disabled until we add connect logic)
         if (spinBtn) {
             spinBtn.addEventListener('click', () => {
                 if (spinBtn.disabled || spinsLeft <= 0) return;
