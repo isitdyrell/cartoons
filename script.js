@@ -200,7 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: boltImg,  name: "Bolt" }
         ];
 
-        let spinsLeft = 3;   // starting spins (you can change this)
+        let spinsLeft = 3;
+
+        // ==================== WIN PROBABILITIES ====================
+        // Change these numbers anytime (0.01 to 25 recommended)
+        const winProbabilities = {
+            boltRow: 10,      // % chance for each row to land 3 Bolts
+            fullStars: .5,   // % chance for full 9 Stars board
+        };
+        // ========================================================
 
         function createGrid() {
             luckyGrid.innerHTML = '';
@@ -217,8 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('🎰 Starting slot-machine spin...');
 
             const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
-            
-            // Group into 3 rows
             const rows = [tiles.slice(0, 3), tiles.slice(3, 6), tiles.slice(6, 9)];
 
             const flipSpeed = 55;
@@ -234,14 +240,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     clearInterval(flipInterval);
+
+                    // === FINAL STOP WITH ODDS BIAS ===
                     row.forEach(tile => {
-                        const randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
-                        tile.innerHTML = `<img src="${randomIcon.src}" alt="${randomIcon.name}">`;
+                        let finalIcon;
+
+                        // Bias for Bolt rows
+                        if (Math.random() * 100 < winProbabilities.boltRow) {
+                            finalIcon = boltImg;
+                        } 
+                        // Bias for full Stars (only on last row)
+                        else if (rowIndex === 2 && Math.random() * 100 < winProbabilities.fullStars) {
+                            finalIcon = starImg;
+                        } 
+                        else {
+                            finalIcon = allIcons[Math.floor(Math.random() * allIcons.length)].src;
+                        }
+
+                        tile.innerHTML = `<img src="${finalIcon}" alt="">`;
                     });
 
-                    // After the LAST row stops → check for wins
+                    // Check wins after last row stops
                     if (rowIndex === 2) {
-                        setTimeout(checkWinConditions, 300);
+                        setTimeout(checkWinConditions, 400);
                     }
                 }, stopDelays[rowIndex]);
             });
@@ -249,54 +270,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function checkWinConditions() {
             const tiles = Array.from(luckyGrid.querySelectorAll('.game-tile'));
-            const grid = [
-                tiles.slice(0, 3),
-                tiles.slice(3, 6),
-                tiles.slice(6, 9)
-            ];
+            const grid = [tiles.slice(0,3), tiles.slice(3,6), tiles.slice(6,9)];
 
             let boltRows = 0;
             let isFullStars = true;
+            let winningTiles = [];
 
-            // Check each row for 3 Bolts
             grid.forEach(row => {
-                const rowIcons = row.map(tile => tile.querySelector('img').src);
-                if (rowIcons.every(src => src.includes('BOLT'))) {
+                const srcs = row.map(t => t.querySelector('img').src);
+                
+                if (srcs.every(s => s.includes('BOLT'))) {
                     boltRows++;
+                    winningTiles.push(...row);
                 }
-                if (!rowIcons.every(src => src.includes('STAR'))) {
+                if (!srcs.every(s => s.includes('STAR'))) {
                     isFullStars = false;
                 }
             });
 
-            let message = "";
-            let winningTiles = [];
-
-            if (boltRows > 0) {
-                spinsLeft += boltRows;
-                message = `+${boltRows} FREE SPIN${boltRows > 1 ? 'S' : ''}!`;
-                // All tiles in bolt rows win
-                grid.forEach((row, i) => {
-                    if (row.every(t => t.querySelector('img').src.includes('BOLT'))) {
-                        winningTiles.push(...row);
-                    }
-                });
-            }
-
             if (isFullStars) {
-                message = "🌟 BIG WIN! 🌟";
-                winningTiles = tiles;   // whole grid celebrates
+                winningTiles = tiles; // whole board wins
             }
 
             // Update status
             const statusEl = document.getElementById('status-text');
-            if (statusEl) statusEl.innerHTML = message || `Spins Left: <span>${spinsLeft}</span>`;
+            let message = `Spins Left: <span>${spinsLeft}</span>`;
 
-            // Apply celebration animation
+            if (boltRows > 0) {
+                spinsLeft += boltRows;
+                message = `+${boltRows} FREE SPIN${boltRows > 1 ? 'S' : ''}!`;
+            }
+            if (isFullStars) {
+                message = "🌟 BIG WIN! 🌟";
+            }
+
+            if (statusEl) statusEl.innerHTML = message;
+
+            // Celebration
             if (winningTiles.length > 0) {
                 winningTiles.forEach(tile => tile.classList.add('winning'));
-
-                // Remove animation after 20 seconds (or next spin)
                 setTimeout(() => {
                     winningTiles.forEach(tile => tile.classList.remove('winning'));
                 }, 20000);
@@ -306,11 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial grid
         createGrid();
 
-        // Test Spin Button
         const testSpinBtn = document.getElementById('test-spin-btn');
         if (testSpinBtn) testSpinBtn.addEventListener('click', spinAnimation);
 
-        // Main Spin Button
         const spinBtn = document.getElementById('spin-btn');
         if (spinBtn) {
             spinBtn.addEventListener('click', () => {
