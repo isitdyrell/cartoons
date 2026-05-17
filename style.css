@@ -137,7 +137,7 @@ body {
 }
 
 /* ==========================================================================
-   Header & Navigation (Fixed - Hamburger always visible)
+   Header & Navigation - Mobile Friendly
    ========================================================================== */
 
 header {
@@ -146,27 +146,18 @@ header {
     z-index: 1000;
     background: white;
     width: 100%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-container {
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    position: relative;
 }
 
-/* Left Side: Hamburger + Connect Wallet */
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-}
-
-/* Hamburger Button */
+/* Hamburger */
 .hamburger {
     background: none;
     border: none;
@@ -186,22 +177,14 @@ header {
     transition: all 0.3s ease;
 }
 
-/* Hamburger Animation */
 .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Center: Logo */
+/* Logo - centered */
 .logo-link {
     display: block;
     transition: transform 0.3s ease;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.logo-link:hover {
-    transform: translateX(-50%) scale(1.08);
 }
 
 .logo {
@@ -209,7 +192,7 @@ header {
     width: auto;
 }
 
-/* Right Side: Social Icons */
+/* Social Icons - right */
 .social-links {
     display: flex;
     gap: 12px;
@@ -231,21 +214,63 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
     background: white;
-    border-top: 2px solid #2b2263;
-    padding: 1.5rem 0;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 2px solid #2b2263;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    margin-top: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    font-size: 1.25rem;
+    align-items: stretch;
+    gap: 1rem;
     z-index: 1000;
 }
 
 .mobile-menu.active {
     display: flex;
+}
+
+.mobile-menu a {
+    color: #2b2263;
+    text-decoration: none;
+    font-size: 1.15rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.mobile-menu a:last-child {
+    border-bottom: none;
+}
+
+.mobile-menu a:hover {
+    color: #b9b7ff;
+}
+
+/* Connect Wallet inside mobile menu */
+#mobile-connect-btn {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Hide desktop Connect button on mobile */
+.desktop-only {
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+/* Make sure mobile menu Connect button looks good */
+#mobile-connect-btn {
+    margin-top: 1rem;
+    text-align: center;
 }
 
 /* ==========================================================================
