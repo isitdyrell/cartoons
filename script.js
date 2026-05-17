@@ -184,7 +184,27 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateFloorPrice, 300000);
     }
 
-   // ==================== LUCKY STARS GAME ====================
+    // ==================== HAMBURGER MENU TOGGLE ====================
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        const menuLinks = mobileMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    }
+   
+    // ==================== LUCKY STARS GAME ====================
     const luckyGrid = document.getElementById('game-grid');
     if (luckyGrid) {
         
