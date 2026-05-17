@@ -181,10 +181,17 @@ header {
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Logo - centered */
+/* Center: Logo */
 .logo-link {
     display: block;
     transition: transform 0.3s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-link:hover {
+    transform: translateX(-50%) scale(1.08);
 }
 
 .logo {
