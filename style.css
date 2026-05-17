@@ -137,7 +137,7 @@ body {
 }
 
 /* ==========================================================================
-   Header & Navigation (Updated Layout)
+   Header & Navigation (Fixed - Hamburger always visible)
    ========================================================================== */
 
 header {
@@ -146,6 +146,7 @@ header {
     z-index: 1000;
     background: white;
     width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-container {
@@ -225,7 +226,7 @@ header {
     transform: scale(1.15);
 }
 
-/* Mobile Menu */
+/* Mobile Menu Dropdown */
 .mobile-menu {
     display: none;
     position: absolute;
@@ -245,12 +246,6 @@ header {
 
 .mobile-menu.active {
     display: flex;
-}
-
-/* Desktop - hide hamburger */
-@media (min-width: 769px) {
-    .hamburger { display: none; }
-    .mobile-menu { display: none !important; }
 }
 
 /* ==========================================================================
