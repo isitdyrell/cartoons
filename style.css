@@ -216,15 +216,14 @@ header {
     transform: scale(1.15);
 }
 
-/* Mobile Dropdown Menu */
+/* Mobile Dropdown Menu - Contained within content area */
 .mobile-menu {
     display: none;
     position: absolute;
     top: 100%;
-    left: 25%;                       /* Start from center of header */
-    transform: translateX(-25%);     /* Center the dropdown under the header content */
-    width: 280px;                    /* or 320px if you want it wider */
-    max-width: 90%;                  /* prevents it from going off-screen on small desktops */
+    left: 1.5rem;                    /* Starts under hamburger, inside content area */
+    width: 280px;
+    max-width: calc(100% - 3rem);    /* Won't go outside the header container */
     background: white;
     border: 2px solid #2b2263;
     border-radius: 12px;
@@ -239,7 +238,6 @@ header {
 .mobile-menu.active {
     display: flex;
 }
-
 .mobile-menu a {
     color: #2b2263;
     text-decoration: none;
