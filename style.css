@@ -71,13 +71,15 @@ body {
 }
 
 /* ==========================================================================
-   Consistent Button Styles
+   CLEAN & CONSISTENT BUTTON STYLES
    ========================================================================== */
 
 .cta-button,
 .control-btn,
 .spin-btn,
-.test-btn {
+.test-btn,
+#verify-btn,
+#mobile-connect-btn {
   background: white;
   color: #2b2263;
   border: 2px solid #2b2263;
@@ -88,53 +90,29 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 120px;
+  text-align: center;
 }
 
 .cta-button:hover,
 .control-btn:hover,
 .spin-btn:hover:not(:disabled),
-.test-btn:hover {
+.test-btn:hover,
+#verify-btn:hover,
+#mobile-connect-btn:hover {
   background: #2b2263;
   color: white;
   border: 2px solid #2b2263;
 }
 
-/* Disabled state */
+/* Disabled Spin button */
 .spin-btn:disabled {
   background: #aaaaaa;
   color: white;
   border: 2px solid #aaaaaa;
   cursor: not-allowed;
-}
-
-/* ==========================================================================
-   Button Styles (2 types only)
-   ========================================================================== */
-
-/* Filled / Primary buttons (login, Explore, Register, etc.) */
-.cta-button, .btn-primary, .connect-button {
-  background: white;
-  color: #2b2263;
-  border: 2px solid #2b2263;
-  padding: 0.8rem 1.8rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: normal;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  display: inline-block;
-  cursor: pointer;
-  width: auto;                     /* ← prevents stretching */
-  min-width: 100px;                /* ← optional minimum width so they don't get too tiny */
-  max-width: 300px;                /* ← caps width – adjust if needed */
-  text-align: center;
-  white-space: nowrap;             /* ← keeps text on one line */
-}
-
-.cta-button:hover, .btn-primary:hover, .connect-button:hover {
-  background: #2b2263;
-  color: white;
-  transform: scale(1.05);
 }
 
 /* Text-only buttons (nav links, legal links, Gallery trigger) */
@@ -192,7 +170,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    position: relative;        /* Very important */
+    position: relative;     
 }
 
 .header-left {
