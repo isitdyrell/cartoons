@@ -25,36 +25,42 @@
 <body>
 <header>
   <div class="header-container">
-    <!-- Logo linked to home -->
-    <a href="index.html" class="logo-link">
-      <img src="assets/wordmark.png" alt="Cartoons Wordmark" class="logo">
-    </a>
 
-<!-- Navigation -->
-<nav style="display:flex; align-items:center; gap: 2rem;">
-    <a href="https://opensea.io/collection/cartoonsnft/explore" target="_blank" rel="noopener noreferrer">nfts</a>
-    <a href="activations.html">activations</a>
-    <a href="art.html">art</a>
-    <a href="docs.html">docs</a>
+    <!-- Left: Hamburger + Logo + Dropdown -->
+    <div class="header-left">
+      <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <a href="index.html" class="logo-link">
+        <img src="assets/wordmark.png" alt="Cartoons Wordmark" class="logo">
+      </a>
 
-    <!-- CONNECT WALLET BUTTON - using your existing cta-button style -->
-    <a href="#" id="dynamicLoginBtn" class="cta-button">LOGIN</a>
-    
-    <!-- Social Icons - placed to the right of the menu -->
-    <div class="social-links" style="display:flex; gap:12px; align-items:center;">
-        <a href="https://x.com/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-            <img src="assets/icons/xBL.png" alt="X icon" class="social-icon">
-        </a>
-        <a href="https://discord.gg/Xs4Cnn3bAp" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-            <img src="assets/icons/discordBL.png" alt="Discord icon" class="social-icon">
-        </a>
+      <!-- Dropdown Menu - now inside the left container -->
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="https://opensea.io/collection/cartoonsnft/explore" target="_blank" rel="noopener noreferrer">nfts</a>
+        <a href="activations.html">activations</a>
+        <a href="art.html">art</a>
+        <a href="docs.html">docs</a>
+        <a href="#" id="mobile-connect-btn" class="cta-button">CONNECT WALLET</a>
+      </div>
     </div>
-</nav>
+
+    <!-- Right: Social Icons -->
+    <div class="social-links">
+      <a href="https://x.com/cartoonsnft" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <img src="assets/icons/xBL.png" alt="X icon" class="social-icon">
+      </a>
+      <a href="https://discord.gg/Xs4Cnn3bAp" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+        <img src="assets/icons/discordBL.png" alt="Discord icon" class="social-icon">
+      </a>
+    </div>
+
   </div>
 
-<!-- Centered 2px line with 20px side margins -->
-<div class="divider-line"></div>
-
+  <div class="divider-line"></div>
 </header>
 
 <main>
