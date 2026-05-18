@@ -221,10 +221,8 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;                       /* Start from center of header */
-    transform: translateX(-50%);     /* Center the dropdown under the header content */
-    width: 280px;                    /* or 320px if you want it wider */
-    max-width: 90%;                  /* prevents it from going off-screen on small desktops */
+    left: 1.5rem;                    /* Aligned under the hamburger */
+    width: 280px;
     background: white;
     border: 2px solid #2b2263;
     border-radius: 12px;
