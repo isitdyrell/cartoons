@@ -221,8 +221,8 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 10%;                       /* Start from center of header */
-    transform: translateX(-10%);     /* Center the dropdown under the header content */
+    left: 25%;                       /* Start from center of header */
+    transform: translateX(-25%);     /* Center the dropdown under the header content */
     width: 280px;                    /* or 320px if you want it wider */
     max-width: 90%;                  /* prevents it from going off-screen on small desktops */
     background: white;
