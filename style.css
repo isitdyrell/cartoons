@@ -71,48 +71,33 @@ body {
 }
 
 /* ==========================================================================
-   CLEAN & CONSISTENT BUTTON STYLES
+   Button Styles (2 types only)
    ========================================================================== */
 
-.cta-button,
-.control-btn,
-.spin-btn,
-.test-btn,
-#verify-btn,
-#mobile-connect-btn {
+/* Filled / Primary buttons (login, Explore, Register, etc.) */
+.cta-button, .btn-primary, .connect-button {
   background: white;
   color: #2b2263;
   border: 2px solid #2b2263;
-  padding: 14px 32px;
+  padding: 0.8rem 1.8rem;
   border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: normal;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
   text-decoration: none;
+  font-weight: normal;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   display: inline-block;
-  min-width: 120px;
+  cursor: pointer;
+  width: auto;                     /* ← prevents stretching */
+  min-width: 100px;                /* ← optional minimum width so they don't get too tiny */
+  max-width: 300px;                /* ← caps width – adjust if needed */
   text-align: center;
+  white-space: nowrap;             /* ← keeps text on one line */
 }
 
-.cta-button:hover,
-.control-btn:hover,
-.spin-btn:hover:not(:disabled),
-.test-btn:hover,
-#verify-btn:hover,
-#mobile-connect-btn:hover {
+.cta-button:hover, .btn-primary:hover, .connect-button:hover {
   background: #2b2263;
   color: white;
-  border: 2px solid #2b2263;
-}
-
-/* Disabled Spin button */
-.spin-btn:disabled {
-  background: #aaaaaa;
-  color: white;
-  border: 2px solid #aaaaaa;
-  cursor: not-allowed;
+  transform: scale(1.05);
 }
 
 /* Text-only buttons (nav links, legal links, Gallery trigger) */
@@ -170,7 +155,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    position: relative;     
+    position: relative;        /* Very important */
 }
 
 .header-left {
