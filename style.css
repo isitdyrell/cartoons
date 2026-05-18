@@ -221,8 +221,8 @@ header {
 .mobile-menu {
     display: none;
     position: absolute;
-    top: 120%;
-    left: 0;                      /* Aligned under hamburger */
+    top: 140%;
+    left: -20;                      /* Aligned under hamburger */
     width: 280px;
     background: white;
     border: 2px solid #2b2263;
