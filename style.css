@@ -137,7 +137,7 @@ body {
 }
 
 /* ==========================================================================
-   Header & Navigation - Mobile Friendly
+   Header & Navigation - Final Layout
    ========================================================================== */
 
 header {
@@ -146,6 +146,7 @@ header {
     z-index: 1000;
     background: white;
     width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .header-container {
@@ -155,6 +156,13 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
+}
+
+/* Left group: Hamburger + Logo inline */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* Hamburger */
@@ -181,17 +189,10 @@ header {
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Center: Logo */
+/* Logo (now inline next to hamburger) */
 .logo-link {
     display: block;
     transition: transform 0.3s ease;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.logo-link:hover {
-    transform: translateX(-50%) scale(1.08);
 }
 
 .logo {
@@ -199,7 +200,7 @@ header {
     width: auto;
 }
 
-/* Social Icons - right */
+/* Social Icons - far right */
 .social-links {
     display: flex;
     gap: 12px;
@@ -216,23 +217,20 @@ header {
     transform: scale(1.15);
 }
 
-/* Mobile Menu Dropdown */
+/* Mobile Dropdown Menu */
 .mobile-menu {
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
+    left: 1.5rem;                    /* aligned under hamburger */
+    width: 280px;                    /* fixed comfortable width */
     background: white;
     border: 2px solid #2b2263;
     border-radius: 12px;
-    padding: 1.5rem 1rem;
+    padding: 1.8rem 1.2rem;          /* more padding so button fits */
     margin-top: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     flex-direction: column;
-    align-items: stretch;
     gap: 1rem;
     z-index: 1000;
 }
@@ -246,37 +244,15 @@ header {
     text-decoration: none;
     font-size: 1.15rem;
     padding: 10px 0;
-    border-bottom: 1px solid #eeeeee;
-}
-
-.mobile-menu a:last-child {
-    border-bottom: none;
 }
 
 .mobile-menu a:hover {
     color: #b9b7ff;
 }
 
-/* Connect Wallet inside mobile menu */
+/* Connect Wallet button inside dropdown */
 #mobile-connect-btn {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-/* Hide desktop Connect button on mobile */
-.desktop-only {
-    display: inline-block;
-}
-
-@media (max-width: 768px) {
-    .desktop-only {
-        display: none;
-    }
-}
-
-/* Make sure mobile menu Connect button looks good */
-#mobile-connect-btn {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: center;
 }
 
