@@ -221,14 +221,14 @@ header {
 .mobile-menu {
     display: none;
     position: absolute;
-    top: 140%;
-    left: -20;                      /* Aligned under hamburger */
-    width: 280px;
+    top: 150%;
+    left: -100;                      /* Aligned under hamburger */
+    width: 300px;
     background: white;
     border: 2px solid #2b2263;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1.8rem 1.2rem;
-    margin-top: 8px;
+    margin-top: 6px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     flex-direction: column;
     gap: 1rem;
