@@ -146,7 +146,6 @@ header {
     z-index: 1000;
     background: white;
     width: 100%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .header-container {
@@ -222,12 +221,14 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 1.5rem;                    /* aligned under hamburger */
-    width: 280px;                    /* fixed comfortable width */
+    left: 50%;                       /* Start from center of header */
+    transform: translateX(-50%);     /* Center the dropdown under the header content */
+    width: 280px;                    /* or 320px if you want it wider */
+    max-width: 90%;                  /* prevents it from going off-screen on small desktops */
     background: white;
     border: 2px solid #2b2263;
     border-radius: 12px;
-    padding: 1.8rem 1.2rem;          /* more padding so button fits */
+    padding: 1.8rem 1.2rem;
     margin-top: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     flex-direction: column;
