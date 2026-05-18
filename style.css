@@ -155,7 +155,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    position: relative;        /* ← This is the key fix */
+    position: relative;        /* Very important */
 }
 
 /* Left group: Hamburger + Logo inline */
@@ -217,12 +217,12 @@ header {
     transform: scale(1.15);
 }
 
-/* Mobile Dropdown Menu - Properly contained */
+/* Mobile Dropdown Menu - Contained inside header */
 .mobile-menu {
     display: none;
     position: absolute;
     top: 100%;
-    left: 1.5rem;                    /* Under the hamburger */
+    left: 0;                       /* Start from left of the centered header */
     width: 280px;
     background: white;
     border: 2px solid #2b2263;
