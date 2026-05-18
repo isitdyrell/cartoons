@@ -71,6 +71,43 @@ body {
 }
 
 /* ==========================================================================
+   Consistent Button Styles
+   ========================================================================== */
+
+.cta-button,
+.control-btn,
+.spin-btn,
+.test-btn {
+  background: white;
+  color: #2b2263;
+  border: 2px solid #2b2263;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.cta-button:hover,
+.control-btn:hover,
+.spin-btn:hover:not(:disabled),
+.test-btn:hover {
+  background: #2b2263;
+  color: white;
+  border: 2px solid #2b2263;
+}
+
+/* Disabled state */
+.spin-btn:disabled {
+  background: #aaaaaa;
+  color: white;
+  border: 2px solid #aaaaaa;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
    Button Styles (2 types only)
    ========================================================================== */
 
