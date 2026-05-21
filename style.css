@@ -1100,19 +1100,36 @@ footer p {
     object-fit: contain;
 }
 
+/* Lucky Stars Logo */
 .logo-container {
   text-align: center;
-  margin: 2rem 0;
+  margin: 2rem 0 1.5rem;
+  padding: 0 1rem;
 }
 
 .luckystars-logo {
   max-width: 420px;
+  width: 100%;           /* Makes it responsive */
+  height: auto;
   animation: pulse 3s ease-in-out infinite;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .logo-container {
+    margin: 1.5rem 0 1rem;
+  }
+  
+  .luckystars-logo {
+    max-width: 280px;     /* Smaller on mobile */
+  }
 }
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50%      { transform: scale(1.04); }   /* Slightly gentler pulse */
 }
 
 /* Controls - Clean layout */
