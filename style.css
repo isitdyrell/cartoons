@@ -441,29 +441,39 @@ header {
 }
 
 /* ==========================================================================
-   Footer & Legal Block
+   Footer & Legal Block - Mobile Optimized
    ========================================================================== */
 
-.footer-legal {
-  background: white;
-  min-height: 30px;
-  padding: 1rem;
+footer {
+  background: #ffffff;
+  color: #2b2263;
+  padding: 2rem 1rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.footer-legal-links {
+.footer-container {
   max-width: 1080px;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;        /* Stack on all devices */
+  align-items: center;           /* Center everything */
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.footer-legal-links {
+  display: flex;
   flex-wrap: wrap;
-  gap: 2rem 4rem;
+  justify-content: center;
+  gap: 1.5rem 2.5rem;
 }
 
 .footer-legal-links a {
   color: #2b2263;
   font-weight: normal;
   text-decoration: none;
-  font-size: .75rem;
+  font-size: 0.85rem;
   transition: color 0.3s ease;
 }
 
@@ -471,46 +481,37 @@ header {
   color: #b9b7ff;
 }
 
-footer {
-  background: #ffffff;
-  color: #2b2263;
-  padding: 0.5rem;
-  position: static;
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 10;
-}
-
-.footer-container {
-  max-width: 1080px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: .5rem;
-  flex-wrap: wrap;
-}
-
-footer p {
-  margin: 1;
-  font-size: .75rem;
-}
-
 .social-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
+  justify-content: center;
 }
 
 .social-icon {
-  width: 30px;
-  height: auto;
-  display: block;
+  width: 32px;
+  height: 32px;
   transition: transform 0.3s ease;
 }
 
-.social-links a:hover .social-icon {
-  transform: rotate(-10deg);
+.social-icon:hover {
+  transform: scale(1.15);
+}
+
+footer p {
+  font-size: 0.8rem;
+  margin: 0;
+  color: #2b2263;
+}
+
+/* Desktop spacing tweak (optional) */
+@media (min-width: 769px) {
+  .footer-container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    gap: 2rem;
+  }
 }
 
 /* ==========================================================================
@@ -581,6 +582,8 @@ footer p {
     width: 92%;
     right: 4%;
     bottom: 90px;
+    max-width: none;
+    border-radius: 10px;
   }
 }
 
