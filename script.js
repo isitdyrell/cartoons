@@ -89,17 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 title: "Lucky Stars",
                 image: "assets/activations/luckystars.gif",
-                tags: ["Game",],
+                tags: ["Web Game",],
                 description: "Spin once per day for a chance to win free NFTs, ETH, and exclusive rewards. Only verified Cartoons holders can play.",
                 buttons: [
                     { text: "Play Now", link: "luckystars.html" }
                 ]
             },
             {
-                title: "SOL Wallet Submit",
+                title: "Solana Wallet Collection",
                 image: "assets/activations/luckystars.gif",
-                tags: [""],
-                description: "We have an upcoming activation on SOLANA. Cartoons Holder can submit their wallets for early access.",
+                tags: ["WL Registration"],
+                description: "We have an upcoming expansion project on SOLANA. Cartoons NFT holders can submit their wallets for early access.",
                 buttons: [
                     { text: "Submit SOL Address", link: "#" }
                 ]
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 title: "Franky's Adventures (Cloudy Skin)",
                 image: "assets/activations/frankysadventures.gif",
-                tags: ["Game", "Collab"],
+                tags: ["Mobile Game", "Collab"],
                 description: "Play as Cloudy in Franky's Adventures! A fun mobile game collab with the Franky's Diner team.",
                 buttons: [
                     { text: "Play on Android", link: "https://play.google.com/store/apps/details?id=com.LonelyLilyStudios.FrankysAdventures&hl=en-US" },
