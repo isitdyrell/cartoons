@@ -1238,15 +1238,15 @@ footer p {
 
 /* Rules Section */
 .rules-section {
-    margin-top: 3rem;
-    padding-top: 2rem;
+    margin-top: 1%;
+    padding-top: 1rem;
 }
 
 .rules-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    max-width: 800px;
+    max-width: 1080px;
     margin: 0 auto;
 }
 
