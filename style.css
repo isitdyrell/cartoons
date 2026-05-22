@@ -915,10 +915,10 @@ footer p {
 }
 
 /* Mobile - single column */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .games-grid {
     grid-template-columns: 1fr;           /* 1 card per row on small screens */
-    gap: 1.8rem;
+    gap: 2rem;
     padding: 0 0.8rem;
   }
 }
