@@ -494,8 +494,8 @@ footer {
   transition: transform 0.3s ease;
 }
 
-.social-icon:hover {
-  transform: scale(1.15);
+.social-links a:hover .social-icon {
+  transform: rotate(-10deg);
 }
 
 footer p {
