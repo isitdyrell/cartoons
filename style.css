@@ -907,18 +907,30 @@ footer p {
   margin-top: 2rem;
 }
 
+/* ==========================================================================
+   Games / Activations Grid - Mobile Optimized
+   ========================================================================== */
+
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));   /* Wider minimum */
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  padding: 0 1rem;
 }
 
-/* Mobile - single column */
-@media (max-width: 800px) {
+/* Mobile - single column with wider cards */
+@media (max-width: 768px) {
   .games-grid {
-    grid-template-columns: 1fr;           /* 1 card per row on small screens */
+    grid-template-columns: 1fr;           /* 1 card per row */
     gap: 2rem;
+    padding: 0 1rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .games-grid {
     padding: 0 0.8rem;
   }
 }
