@@ -1238,16 +1238,23 @@ footer p {
 
 /* Rules Section */
 .rules-section {
-    margin-top: 1%;
-    padding-top: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
 }
 
 .rules-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    max-width: 1080px;
+    max-width: 800px;
     margin: 0 auto;
+}
+
+/* Mobile: Stack the win cards vertically */
+@media (max-width: 768px) {
+    .rules-grid {
+        grid-template-columns: 1fr;   /* 1 column on mobile */
+    }
 }
 
 .rule-card.full-width {
@@ -1262,9 +1269,11 @@ footer p {
     text-align: left;
 }
 
+.rule-card h3,
 .rule-card h4 {
     margin: 1rem 0 0.5rem;
     color: #2b2263;
+    text-align: center;
 }
 
 .demo-grid {
