@@ -1264,9 +1264,9 @@ footer p {
 .rule-card {
     background: white;
     border: 2px solid #2b2263;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 1.5rem;
-    text-align: center;
+    text-align: left;
 }
 
 .rule-card h3,
