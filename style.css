@@ -913,17 +913,15 @@ footer p {
 
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));   /* Wider minimum */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));   /* Wider minimum cards */
   gap: 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 0 1rem;
 }
 
-/* Mobile - single column with wider cards */
 @media (max-width: 768px) {
   .games-grid {
-    grid-template-columns: 1fr;           /* 1 card per row */
-    gap: 2rem;
+    grid-template-columns: 1fr;        /* Single column on mobile */
     padding: 0 1rem;
   }
 }
