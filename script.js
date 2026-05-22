@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (legalModal && titleEl && bodyEl && closeBtn) {
         const content = {
-            faq: `<p>Q: What is Cartoons NFT? <br>A: ... (your full FAQ)</p>`,
             disclaimer: `<p>Cryptocurrencies, NFTs... (your disclaimer)</p>`,
             terms: `<h4>Terms of Use</h4><p>Full terms coming soon!</p>`,
             privacy: `<h4>Privacy Policy</h4><p>We respect your data...</p>`
