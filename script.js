@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
                 title: "Solana Wallet Collection",
-                image: "assets/activations/tooncoin.png",
+                image: "assets/activations/solanaexp.png",
                 tags: ["WL Registration"],
                 description: "We have an upcoming expansion project on SOLANA. Cartoons NFT holders can submit their wallets for early access.",
                 buttons: [

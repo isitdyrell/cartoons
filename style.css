@@ -942,11 +942,6 @@ footer p {
   height: 100%;                    /* Makes cards same height */
 }
 
-.game-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(43, 34, 99, 0.15);
-}
-
 .game-card img {
     width: 100%;
     aspect-ratio: 16 / 9;
