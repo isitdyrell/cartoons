@@ -319,7 +319,7 @@ header {
 /* Centered heading with inline wordmark */
 .heading-wrapper {
   text-align: center;
-  padding: 2rem 1rem 3rem;
+  padding: 2rem 1rem 2.5rem;
 }
 
 .main-heading {
@@ -331,14 +331,39 @@ header {
   align-items: center;
   gap: 0.8rem;
   line-height: 1;
+  flex-wrap: wrap;           /* Allows wrapping on very small screens */
+  justify-content: center;
 }
 
 .wordmark-inline {
-  height: 4rem;
+  height: 3.8rem;            /* Slightly smaller by default */
   width: auto;
   display: inline-block;
   vertical-align: middle;
-  margin-top: -0.9rem;
+  margin-top: -0.7rem;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .main-heading {
+    font-size: 1.65rem;      /* Smaller text on mobile */
+    gap: 0.6rem;
+  }
+  
+  .wordmark-inline {
+    height: 2.8rem;          /* Smaller logo on mobile */
+    margin-top: -0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-heading {
+    font-size: 1.45rem;
+  }
+  
+  .wordmark-inline {
+    height: 2.4rem;
+  }
 }
 
 /* ==========================================================================
