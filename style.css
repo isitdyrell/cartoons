@@ -835,7 +835,7 @@ footer p {
    ========================================================================== */
 
 .nft-gallery-section {
-  padding: 2rem 1rem;
+  padding: 2rem 2rem;
   background: #ffffff;
   max-width: 1080px;
   margin: 0 auto;
@@ -843,22 +843,21 @@ footer p {
 
 .gallery-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
   margin-bottom: 2rem;
-  text-align: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .gallery-filters {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .filter-btn {
-  padding: 10px 18px;
+  padding: 10px 20px;
   border: 2px solid #2b2263;
   background: white;
   color: #2b2263;
@@ -866,7 +865,7 @@ footer p {
   cursor: pointer;
   font-weight: normal;
   transition: all 0.3s ease;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .filter-btn.active,
@@ -893,21 +892,21 @@ footer p {
 @media (max-width: 768px) {
   .nft-grid {
     grid-template-columns: repeat(2, 1fr);   /* 2 columns on mobile */
-    gap: 16px;
+    gap: 10px;
   }
 }
 
 /* Very small phones */
 @media (max-width: 480px) {
   .nft-grid {
-    grid-template-columns: 1fr;   /* 1 column on tiny screens */
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
   }
 }
 
 .nft-card {
   border: 2px solid #2b2263;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   background: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -916,7 +915,7 @@ footer p {
 }
 
 .nft-card:hover {
-  transform: scale(1.04);
+  transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(43, 34, 99, 0.15);
 }
 
