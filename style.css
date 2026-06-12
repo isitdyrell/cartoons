@@ -394,7 +394,6 @@ header {
   max-width: 520px;              /* Limit max size on desktop */
   height: auto;
   object-fit: cover;
-  border: 2px solid #2b2263;     /* Consistent 2px border */
   border-radius: 8px;
   display: block;
 }
