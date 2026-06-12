@@ -383,7 +383,7 @@ header {
   padding: 3rem 1rem;
   display: flex;
   flex-direction: column;        /* Default stack on mobile */
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
 }
 
@@ -391,8 +391,9 @@ header {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 10px;
-  max-height: 420px;
+  display: block;
+  border-radius: 0px;
+  max-height: 300px;
 }
 
 .right-content {
@@ -410,11 +411,56 @@ header {
   color: #2b2263;
 }
 
+.checkmark-inline {
+  width: 0.9em;
+  height: auto;
+  display: inline-block;
+  vertical-align: -0.1em;
+  margin-left: 0.1em;
+}
+
 .section-blurb {
   font-size: 1rem;
   line-height: 1.6;
   margin: 0 0 2rem;
   color: #2b2263;
+}
+
+/* Stats Carousel */
+.stats-carousel {
+  overflow: hidden;
+  margin: 0 0 3rem;
+  margin-top: -1rem;      /* Reduced from 3rem */
+  margin-bottom: 0rem;
+}
+
+.stats-track {
+  display: flex;
+  animation: stats-slide 28s linear infinite;
+  width: max-content;
+}
+
+.stat-item {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 0 3.5rem 0 0;
+  white-space: nowrap;
+  color: #2b2263;
+}
+
+@keyframes stats-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 /* Desktop - side by side */
