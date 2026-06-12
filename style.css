@@ -373,8 +373,7 @@ header {
 .white-block {
   background: white;
   width: 100%;
-  margin: 0 -2rem;
-  padding: 0 2rem;
+  padding: 2rem 1rem;           /* Balanced padding */
 }
 
 .white-block-wrapper {
@@ -391,7 +390,7 @@ header {
 /* Image */
 .square-image {
   width: 100%;
-  max-width: 300px;              /* Smaller on desktop */
+  max-width: 480px;              /* Smaller on desktop */
   height: auto;
   object-fit: cover;
   display: block;
