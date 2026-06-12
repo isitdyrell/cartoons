@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: "Lucky Stars",
                 image: "assets/activations/luckystars.gif",
                 tags: ["Web Game",],
-                description: "Spin daily for a chance to win free NFTs, ETH, and exclusive rewards.<br><br><strong>Only verified Cartoons holders can play.</strong>",
+                description: "Spin daily for a chance to win free NFTs, ETH, and exclusive rewards.<br>Only verified Cartoons holders can play",
                 buttons: [
                     { text: "COMING SOON", link: "#" }
                 ]

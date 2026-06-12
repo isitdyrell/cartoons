@@ -367,7 +367,7 @@ header {
 }
 
 /* ==========================================================================
-   White Block Sections
+   White Block Sections - Mobile Friendly
    ========================================================================== */
 
 .white-block {
@@ -375,31 +375,28 @@ header {
   width: 100%;
   margin: 0 -2rem;
   padding: 0 2rem;
-  display: flex;
-  align-items: stretch;
-  min-height: 500px;
-  overflow: hidden;
 }
 
 .white-block-wrapper {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 3rem 1rem;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;        /* Default stack on mobile */
+  gap: 2rem;
   width: 100%;
 }
 
 .square-image {
-  width: 30%;
-  height: 100%;
+  width: 100%;
+  height: auto;
   object-fit: cover;
-  display: block;
-  border-radius: 0px;
+  border-radius: 8px;
+  max-height: 420px;
 }
 
 .right-content {
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -407,62 +404,42 @@ header {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   margin: 0 0 1rem;
   font-weight: normal;
   color: #2b2263;
 }
 
-.checkmark-inline {
-  width: 0.9em;
-  height: auto;
-  display: inline-block;
-  vertical-align: -0.1em;
-  margin-left: 0.1em;
-}
-
 .section-blurb {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   line-height: 1.6;
-  margin: 0 0 2.5rem;
+  margin: 0 0 2rem;
   color: #2b2263;
 }
 
-/* Stats Carousel */
-.stats-carousel {
-  overflow: hidden;
-  margin: 0 0 3rem;
-  margin-top: -1rem;      /* Reduced from 3rem */
-  margin-bottom: 0rem;
+/* Desktop - side by side */
+@media (min-width: 769px) {
+  .white-block-wrapper {
+    flex-direction: row;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .square-image {
+    width: 38%;
+    max-height: none;
+  }
+  
+  .right-content {
+    width: 58%;
+  }
 }
 
-.stats-track {
-  display: flex;
-  animation: stats-slide 28s linear infinite;
-  width: max-content;
-}
-
-.stat-item {
-  flex: 0 0 auto;
-  font-size: 1rem;
-  font-weight: normal;
-  padding: 0 3.5rem 0 0;
-  white-space: nowrap;
-  color: #2b2263;
-}
-
-@keyframes stats-slide {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.cta-group {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .square-image {
+    width: 45%;
+  }
 }
 
 /* ==========================================================================
