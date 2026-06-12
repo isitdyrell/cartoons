@@ -391,7 +391,7 @@ header {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   max-height: 420px;
 }
 
@@ -399,19 +399,19 @@ header {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
   text-align: left;
 }
 
 .section-title {
-  font-size: 2.4rem;
+  font-size: 2rem;
   margin: 0 0 1rem;
   font-weight: normal;
   color: #2b2263;
 }
 
 .section-blurb {
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin: 0 0 2rem;
   color: #2b2263;
@@ -421,12 +421,12 @@ header {
 @media (min-width: 769px) {
   .white-block-wrapper {
     flex-direction: row;
-    gap: 3rem;
+    gap: 1rem;
     align-items: center;
   }
   
   .square-image {
-    width: 38%;
+    width: 50%;
     max-height: none;
   }
   
